@@ -25,30 +25,21 @@ class GifAnimationPreview {
     }
 
     public function replace_gifs($content) {
-        //die(mb_detect_encoding($content));
-        $updated = false;
-        $dom = new DOMDocument('1.0', 'utf-8');
-        @$dom->loadHTML($content);
-        $imgs = $dom->getElementsByTagName('img');
-        for ($i = 0; $i < $imgs->length; $i++) {
-            $img = $imgs->item($i);
-            $src = $img->getAttribute('src');
-            if (substr(strtolower($src), -4) == '.gif') {
-                $new_src = $this->getPreview($src);
-                if ($new_src !== false) {
-                    $img->setAttribute('src', $new_src);
-                    $img->setAttribute('onclick', "if(this.src.indexOf('{$this->preview_suffix}')!=-1){this.src='';this.src='$src';}else this.src='$new_src';return false;");
-                    $updated = true;
+        return preg_replace_callback('/<img[^>]+>/i', function($img_tag) {
+            return preg_replace_callback('/(src|class|onclick)=["\']?([^"\' ]*)["\' ]/is', function($attr) {
+
+                if (strtolower($attr[1]) == 'src') {
+                    if (substr(strtolower($attr[2]), -4) == '.gif') {
+                        $new_src = $this->getPreview($attr[2]);
+                        if ($new_src !== false) {
+                            return "src=\"$new_src\" onclick=\"if(this.src.indexOf('".$this->preview_suffix."')!=-1){this.src='';this.src='".$attr[2]."';}else this.src='$new_src';return false;\"";
+                        }
+                    }
                 }
-            }
-        }
-        if ($updated) {
-            $html = $dom->saveHTML();
-            $html = substr($html, strpos($html, '<body>') + 6);
-            $html = substr($html, 0, strpos($html, '</body>'));
-            return $html;
-        }
-        return $content;
+
+                return $attr[0];
+            }, $img_tag[0]);
+        }, $content);
     }
 
     private function getPreview($img_url) {
