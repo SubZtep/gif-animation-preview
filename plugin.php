@@ -7,11 +7,11 @@ Author: Andras Serfozo
 Author URI: http://twitter.com/SubZtep
 License: GPLv2 or later
 */
+require_once(__DIR__.'/gifpic.class.php');
 
 class GifAnimationPreview {
 
-    public $preview_suffix = '-gifpreview'; // Preview image filename suffix
-    public $watermark;
+    protected $gifpic;
 
     private static $plugin;
     static function load() {
@@ -22,107 +22,60 @@ class GifAnimationPreview {
     private function __construct() {
         $this->watermark = __DIR__.'/play.png';
         add_action('the_content', array($this, 'replace_gifs'));
+        $this->gifpic = new GifPic();
     }
 
     public function replace_gifs($content) {
+        // Find all img tags in the post
         return preg_replace_callback('/<img[^>]+>/i', function($img_tag) {
-            return preg_replace_callback('/(src|class|onclick)=["\']?([^"\' ]*)["\' ]/is', function($attr) {
+            $original_src = false; // Original img src
+            $new_src = false; // Gif anim preview src
 
-                if (strtolower($attr[1]) == 'src') {
-                    if (substr(strtolower($attr[2]), -4) == '.gif') {
-                        $new_src = $this->getPreview($attr[2]);
-                        if ($new_src !== false) {
-                            return "src=\"$new_src\" onclick=\"if(this.src.indexOf('".$this->preview_suffix."')!=-1){this.src='';this.src='".$attr[2]."';}else this.src='$new_src';return false;\"";
-                        }
+            // Get src property
+            $patterns = array('/(src=")([^"]+)(")/i', '/(src=\')([^\']+)(\')/i');
+            $new_img_tag = preg_replace_callback($patterns, function($attr) use (&$original_src, &$new_src) {
+                // Test only gif
+                if (substr(strtolower($attr[2]), -4) == '.gif') {
+                    $this->gifpic->filename = $attr[2];
+                    if ($this->gifpic->isAnimation()) {
+                        // Get preview link
+                        $original_src = $attr[2];
+                        $new_src = $this->gifpic->getPreview();
+                        return $attr[1].$new_src.$attr[3];
                     }
                 }
-
+                // Not gif nor animation, do nothing
                 return $attr[0];
             }, $img_tag[0]);
+
+            // Apply modifiers if necessary
+            if ($new_src !== false) {
+                // overwrite onclick attribute
+                $onclick = "if(this.src.indexOf('".$this->gifpic->preview_suffix."')!=-1){this.src='';this.src='$original_src';}else{this.src='$new_src';}return false;";
+                $found = false;
+                $patterns = array('/(onclick=")([^"]+)(")/i', '/(onclick=\')([^\']+)(\')/i');
+                $img_tag = preg_replace_callback($patterns, function($attr) use ($onclick, &$found) {
+                    $found = true;
+                    return $attr[1].$attr[2].$onclick.$attr[3];
+                }, $new_img_tag);
+
+                if (! $found) {
+                    // no onclick attribute, simply insert onclick before src 
+                    $patterns = array('/( src="[^"]+")/i', '/( src=\'[^\']+\')/i');
+                    $img_tag = preg_replace_callback($patterns, function($attr) use ($onclick) {
+                        return $attr[0].' onclick="'.$onclick.'"';
+                    }, $new_img_tag);
+                }
+            }
+
+            if (is_array($img_tag)) {
+                return $img_tag[0];
+            }
+            return $img_tag;
+
         }, $content);
     }
 
-    private function getPreview($img_url) {
-        $img_path = $this->getPathFromUrl($img_url);
-        $preview_filename = pathinfo($img_path, PATHINFO_FILENAME) . $this->preview_suffix . '.jpg';
-        if (file_exists(dirname($img_path) .'/'. $preview_filename)) {
-            return pathinfo($img_url, PATHINFO_DIRNAME) .'/'. $preview_filename;
-        } else {
-            return $this->generatePreview($img_url);
-        }
-    }
-
-    private function generatePreview($img_url) {
-        $img_path = $this->getPathFromUrl($img_url);
-        if (! $this->is_ani($img_path)) {
-            return false;
-        }
-
-        $image = @imagecreatefromgif($img_path);
-        if ($image === false) {
-            return false;
-        }
-
-        $water_size = getimagesize($this->watermark);
-        switch ($water_size['mime']) {
-            case 'image/png': $watermark = @imagecreatefrompng($this->watermark); break;
-            case 'image/gif': $watermark = @imagecreatefromgif($this->watermark); break;
-            case 'image/jpg': 
-            case 'image/jpeg': $watermark = @imagecreatefromjpeg($this->watermark); break;
-            default: return false;
-        }
-
-        $w = imagesx($image);
-        $h = imagesy($image);
-        $ww = imagesx($watermark);
-        $wh = imagesy($watermark);
-        $cut = imagecreatetruecolor($w, $h);
-        imagecopy($cut, $image, 0, 0, 0, 0, $w, $h);
-        imagecopy($cut, $watermark, (($w/2)-($ww/2)), (($h/2)-($wh/2)), 0, 0, $ww, $wh);
-
-        $preview_filename = pathinfo($img_path, PATHINFO_FILENAME) . $this->preview_suffix . '.jpg';
-        $res = imagepng($cut, dirname($img_path) .'/'. $preview_filename);
-        imagedestroy($image);
-        imagedestroy($watermark);
-        imagedestroy($cut);
-        if (! $res) {
-            return false;
-        }
-        return pathinfo($img_url, PATHINFO_DIRNAME) .'/'. $preview_filename;
-    }
-
-    private function getPathFromUrl($url) {
-        $site_url = get_site_url();
-        if (strpos($url, $site_url) === 0) {
-            $url = substr($url, strlen($site_url));
-            if (substr($url, 0, 1) != '/') {
-                $url = '/'.$url;
-            }
-            return realpath(ABSPATH) . $url;
-        }
-        return false;
-    }
-
-    private function is_ani($filename) {
-        if(!($fh = @fopen($filename, 'rb')))
-            return false;
-        $count = 0;
-        //an animated gif contains multiple "frames", with each frame having a
-        //header made up of:
-        // * a static 4-byte sequence (\x00\x21\xF9\x04)
-        // * 4 variable bytes
-        // * a static 2-byte sequence (\x00\x2C)
-
-        // We read through the file til we reach the end of the file, or we've found
-        // at least 2 frame headers
-        while(!feof($fh) && $count < 2) {
-            $chunk = fread($fh, 1024 * 100); //read 100kb at a time
-            $count += preg_match_all('#\x00\x21\xF9\x04.{4}\x00\x2C#s', $chunk, $matches);
-        }
-
-        fclose($fh);
-        return $count > 1;
-    }
 }
 
 GifAnimationPreview::load();
