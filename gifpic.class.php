@@ -6,6 +6,7 @@ class GifPic {
     public $filename;
 
     public function __construct($filename = null) {
+        $this->watermark = __DIR__.'/play.png';
         if (! is_null($filename)) {
             $this->filename = $filename;
         }

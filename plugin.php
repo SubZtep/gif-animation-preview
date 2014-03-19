@@ -2,7 +2,7 @@
 /*
 Plugin Name: GIF Animation Preview
 Description: Replace GIF animations to a single preview image. Click on the image to start animate.
-Version: 1.0.0
+Version: 1.1
 Author: Andras Serfozo
 Author URI: http://twitter.com/SubZtep
 License: GPLv2 or later
@@ -20,7 +20,6 @@ class GifAnimationPreview {
     }
 
     private function __construct() {
-        $this->watermark = __DIR__.'/play.png';
         add_action('the_content', array($this, 'replace_gifs'));
         $this->gifpic = new GifPic();
     }
@@ -51,7 +50,7 @@ class GifAnimationPreview {
             // Apply modifiers if necessary
             if ($new_src !== false) {
                 // overwrite onclick attribute
-                $onclick = "if(this.src.indexOf('".$this->gifpic->preview_suffix."')!=-1){this.src='';this.src='$original_src';}else{this.src='$new_src';}return false;";
+                $onclick = "if(this.src.indexOf('".$this->gifpic->preview_suffix."')!=-1){this.src='$original_src';}else{this.src='$new_src';}return false;";
                 $found = false;
                 $patterns = array('/(onclick=")([^"]+)(")/i', '/(onclick=\')([^\']+)(\')/i');
                 $img_tag = preg_replace_callback($patterns, function($attr) use ($onclick, &$found) {
