@@ -2,7 +2,7 @@
 /*
 Plugin Name: GIF Animation Preview
 Description: Replace GIF animations to a single preview image. Click on the image to start animate.
-Version: 1.1
+Version: 1.2
 Author: Andras Serfozo
 Author URI: http://twitter.com/SubZtep
 License: GPLv2 or later
