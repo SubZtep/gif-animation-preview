@@ -1,6 +1,7 @@
 <?php
 /*
 Plugin Name: GIF Animation Preview
+Plugin URI: http://wordpress.org/plugins/gif-animation-preview/
 Description: Replace GIF animations to a single preview image. Click on the image to start animate.
 Version: 1.2
 Author: Andras Serfozo
