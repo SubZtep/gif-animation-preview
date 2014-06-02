@@ -8,12 +8,6 @@ Author: Andras Serfozo
 Author URI: http://twitter.com/SubZtep
 License: GPLv2 or later
 */
-
-/*
-gifplayer under MIT license by Rubén Torres
-http://rubentd.com/gifplayer/
-*/
-
 register_activation_hook(__FILE__, 'gap_test_env');
 
 function gap_test_env() {
@@ -34,13 +28,17 @@ function gap_test_env() {
 }
 
 function gif_animation_preview_init() {
-    wp_register_script( 'gif_animation_preview_script', plugins_url( '/jquery.gifplayer.min.js', __FILE__ ), array( 'jquery' ) );
-    wp_register_style( 'gif_animation_preview_style', plugins_url( '/gifplayer.min.css', __FILE__ ) );
+    wp_register_script( 'gifplayer', plugins_url( '/jquery.gifplayer.min.js', __FILE__ ), array( 'jquery' ), '0.1.4' );
+    wp_register_script( 'imagesloaded', plugins_url( '/imagesloaded.pkgd.min.js', __FILE__ ), array(), '0.1.4' );
+    wp_register_script( 'gif_animation_preview', plugins_url( '/plugin.js', __FILE__ ), array('jquery', 'gifplayer', 'imagesloaded') );
+    wp_register_style( 'gifplayer', plugins_url( '/gifplayer.min.css', __FILE__ ), array(), '0.1.4' );
 }
 
 function gif_animation_preview_enqueue_scripts() {
-    wp_enqueue_script( 'gif_animation_preview_script' );
-    wp_enqueue_style( 'gif_animation_preview_style' );
+    wp_enqueue_script( 'gifplayer' );
+    wp_enqueue_script( 'imagesloaded' );
+    wp_enqueue_script( 'gif_animation_preview' );
+    wp_enqueue_style( 'gifplayer' );
 }
 
 if (! is_admin()) {
