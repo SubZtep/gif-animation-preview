@@ -9,6 +9,11 @@ Author URI: http://twitter.com/SubZtep
 License: GPLv2 or later
 */
 
+/*
+gifplayer under MIT license by Rubén Torres
+http://rubentd.com/gifplayer/
+*/
+
 register_activation_hook(__FILE__, 'gap_test_env');
 
 function gap_test_env() {
@@ -28,7 +33,20 @@ function gap_test_env() {
     return true;
 }
 
+function gif_animation_preview_init() {
+    wp_register_script( 'gif_animation_preview_script', plugins_url( '/jquery.gifplayer.min.js', __FILE__ ), array( 'jquery' ) );
+    wp_register_style( 'gif_animation_preview_style', plugins_url( '/gifplayer.min.css', __FILE__ ) );
+}
+
+function gif_animation_preview_enqueue_scripts() {
+    wp_enqueue_script( 'gif_animation_preview_script' );
+    wp_enqueue_style( 'gif_animation_preview_style' );
+}
+
 if (! is_admin()) {
+    add_action('init', 'gif_animation_preview_init');
+    add_action('wp_enqueue_scripts', 'gif_animation_preview_enqueue_scripts');
+
     require_once( __DIR__ . '/gap.class.php' );
     GIF_Animation_Preview::load();
 }
