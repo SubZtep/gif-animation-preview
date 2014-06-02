@@ -41,9 +41,10 @@ class GIF_Animation_Preview {
             $this->gifpic->filename = $src[2];
             if ( $this->gifpic->isAnimation() ) {
                 // Get preview link
-                $original_src = $src[2];
                 $new_src = $this->gifpic->getPreview();
-                return $src[1] . $new_src . $src[3] . ' data-gif=' . $src[3] . $src[2] . $src[3];
+                if ($new_src) {
+                    return $src[1] . $new_src . $src[3] . ' data-gif=' . $src[3] . $src[2] . $src[3];
+                }
             }
         }
         // Not gif nor animation, do nothing
