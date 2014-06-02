@@ -2,7 +2,7 @@
 Contributors: subztep
 Tags: gif
 Tested up to: 3.9.1
-Stable tag: 1.2
+Stable tag: 1.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -18,7 +18,7 @@ What this plugin does is:
 
 *   Find self hosted gif animations
 *   Generate jpeg image to the same folder
-*   Update img tags in the post (src and onclick)
+*   Update image tag attributes in the post
 
 On GitHub:
 https://github.com/SubZtep/gif-animation-preview
@@ -29,6 +29,10 @@ https://github.com/SubZtep/gif-animation-preview
 2. Activate the plugin through the 'Plugins' menu in WordPress
 
 == Changelog ==
+
+= 1.3 =
+* Decrase PHP version requirement from 5.4 to 5.0
+* Uses Gifplayer and Imageloaded libraries
 
 = 1.2 =
 * Add PHP version and GD check
