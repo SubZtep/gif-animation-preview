@@ -1,10 +1,7 @@
 <?php
-require_once( __DIR__ . '/gifpic.class.php' );
-
 class GIF_Animation_Preview {
 
     public $preview_suffix = '-gap'; // Preview image filename suffix
-    protected $gifpic;
 
     private static $plugin;
     static function load() {
@@ -14,7 +11,6 @@ class GIF_Animation_Preview {
 
     private function __construct() {
         add_action( 'the_content', array( $this, 'replace_gifs' ) );
-        $this->gifpic = new Gif_Pic();
     }
 
     public function replace_gifs( $content ) {
