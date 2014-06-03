@@ -31,7 +31,7 @@ https://github.com/SubZtep/gif-animation-preview
 == Changelog ==
 
 = 1.3 =
-* Decrase PHP version requirement from 5.4 to 5.0
+* Decrase PHP version requirement from 5.4 to 5.2
 * Uses gifplayer and imagesLoaded libraries
 
 = 1.2 =

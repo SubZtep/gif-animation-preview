@@ -12,8 +12,8 @@ register_activation_hook(__FILE__, 'gap_test_env');
 
 function gap_test_env() {
     $errors = array();
-    if (version_compare(PHP_VERSION, '5.0', '<')) {
-        $errors[] = 'This plugin requires at least PHP version 5.0';
+    if (version_compare(PHP_VERSION, '5.2', '<')) {
+        $errors[] = 'This plugin requires at least PHP version 5.2';
     }
     if (! extension_loaded('gd') || ! function_exists('gd_info')) {
         $errors[] = 'This plugin requires GD support';
