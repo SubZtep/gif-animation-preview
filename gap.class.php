@@ -92,7 +92,7 @@ class GIF_Animation_Preview {
         $site_url = get_site_url();
         if ( strpos( $filename, $site_url ) === 0 ) {
             $url = substr( $filename, strlen( $site_url ) );
-            if ( substr( $filename, 0, 1 ) != '/' ) {
+            if ( substr( $url, 0, 1 ) != '/' ) {
                 $url = '/' . $url;
             }
             return realpath( ABSPATH ) . $url;
