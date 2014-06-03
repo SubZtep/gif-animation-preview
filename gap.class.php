@@ -19,9 +19,6 @@ class GIF_Animation_Preview {
     }
 
     function process_img( $img_tag ) {
-        $original_src = false; // Original img src
-        $new_src = false; // Gif anim preview src
-
         // Update src property
         $patterns = array( '/(src=")([^"]+)(")/i', '/(src=\')([^\']+)(\')/i' );
         $new_img_tag = preg_replace_callback( $patterns, array( $this, 'update_src' ), $img_tag[0] );
