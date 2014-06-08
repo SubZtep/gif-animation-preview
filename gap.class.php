@@ -22,10 +22,8 @@ class GIF_Animation_Preview {
         // Update src property
         $patterns = array( '/(src=")([^"]+)(")/i', '/(src=\')([^\']+)(\')/i' );
         $new_img_tag = preg_replace_callback( $patterns, array( $this, 'update_src' ), $img_tag[0] );
-        if ( $img_tag[0] == $new_img_tag ) {
-            // Not supported gif, do nothing
+        if ( $img_tag[0] == $new_img_tag ) // Not supported gif, do nothing
             return $img_tag[0];
-        }
         return $new_img_tag;
     }
 
@@ -33,12 +31,10 @@ class GIF_Animation_Preview {
         // Test only gif
         if ( substr( strtolower( $src[2] ), -4) == '.gif' ) {
             $new_src = $this->get_preview_url( $src[2] );
-            if ( ! $new_src ) {
+            if ( ! $new_src )
                 $new_src = $this->generate_preview( $src[2] );
-            }
-            if ( $new_src ) {
+            if ( $new_src )
                 return $src[1] . $new_src . $src[3] . ' data-gif=' . $src[3] . $src[2] . $src[3];
-            }
         }
         // Not gif nor animation, do nothing
         return $src[0];
@@ -48,10 +44,8 @@ class GIF_Animation_Preview {
         $path = $this->get_blog_img_dir( $original_url, true );
         $preview_filename = $this->get_preview_filename( $original_url );
 
-        if ( file_exists( $path . $preview_filename ) ) {
-            $url = $this->get_blog_img_dir( $original_url, false );
-            return $url . '/' . $preview_filename;
-        }
+        if ( file_exists( $path . $preview_filename ) )
+            return $this->get_blog_img_dir( $original_url, false ) . $preview_filename;
         return false;
     }
 
@@ -75,11 +69,10 @@ class GIF_Animation_Preview {
     }
 
     public function is_animation( $filename ) {
-        if ( ! ( $fh = @fopen( $filename, 'rb' ) ) ) {
+        if ( ! ( $fh = @fopen( $filename, 'rb' ) ) )
             return false;
-        }
         $count = 0;
-        while ( ! feof($fh) && $count < 2 ) {
+        while ( ! feof( $fh ) && $count < 2 ) {
             $chunk = fread( $fh, 1024 * 100 );
             $count += preg_match_all( '#\x00\x21\xF9\x04.{4}\x00\x2C#s', $chunk, $matches );
         }
@@ -87,35 +80,30 @@ class GIF_Animation_Preview {
         return $count > 1;
     }
 
-    protected function generate_preview( $img_url ) {
-        if ( ! $this->is_animation( $img_url ) ) {
+    public function generate_preview( $img_url ) {
+        if ( ! $this->is_animation( $img_url ) )
             return false;
-        }
 
         $img_path = $this->get_blog_img_dir( $img_url, true );
-        if ( $this->is_local_image( $img_url ) ) {
+        if ( $this->is_local_image( $img_url ) )
             $image = imagecreatefromgif( $img_path . $this->mb_basename( $img_url ) );
-        } else {
-            //FIXME: curl?
-            $image = imagecreatefromgif( $img_url );
-        }
-        if ( ! $image ) {
+        else
+            $image = imagecreatefromgif( $img_url ); //FIXME: curl?
+        if ( ! $image )
             return false;
-        }
 
-        $preview_file = $this->get_preview_filename( $img_url );
         $w = imagesx( $image );
         $h = imagesy( $image );
         $cut = imagecreatetruecolor( $w, $h );
         imagecopy( $cut, $image, 0, 0, 0, 0, $w, $h );
+        $preview_file = $this->get_preview_filename( $img_url );
         $res = imagejpeg( $cut, $img_path . $preview_file, 80 );
-        if ( ! $res ) {
+        if ( ! $res )
             return false;
-        }
         return $this->get_blog_img_dir( $img_url, false ) . $preview_file;
     }
 
-    function mb_basename($filepath, $suffix = NULL) {
+    function mb_basename( $filepath, $suffix = null ) {
         $splited = preg_split ( '/\//', rtrim ( $filepath, '/ ' ) );
         return substr ( basename ( 'X' . $splited [count ( $splited ) - 1], $suffix ), 1 );
     }
