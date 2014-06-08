@@ -18,7 +18,7 @@ class GIF_Animation_Preview {
         return preg_replace_callback( '/<img[^>]+>/i', array( $this, 'process_img' ), $content );
     }
 
-    function process_img( $img_tag ) {
+    protected function process_img( $img_tag ) {
         // Update src property
         $patterns = array( '/(src=")([^"]+)(")/i', '/(src=\')([^\']+)(\')/i' );
         $new_img_tag = preg_replace_callback( $patterns, array( $this, 'update_src' ), $img_tag[0] );
@@ -29,7 +29,7 @@ class GIF_Animation_Preview {
         return $new_img_tag;
     }
 
-    function update_src( $src ) {
+    protected function update_src( $src ) {
         // Test only gif
         if ( substr( strtolower( $src[2] ), -4) == '.gif' ) {
             $new_src = $this->get_preview_url( $src[2] );
@@ -44,13 +44,34 @@ class GIF_Animation_Preview {
         return $src[0];
     }
 
-    function get_preview_url( $original_url ) {
-        $img_path = $this->get_path_from_url( $original_url );
-        $preview_filename = pathinfo( $img_path, PATHINFO_FILENAME ) . $this->preview_suffix . '.jpg';
-        if ( file_exists( dirname( $img_path ) . '/' . $preview_filename ) ) {
-            return pathinfo( $original_url, PATHINFO_DIRNAME ) . '/' . $preview_filename;
+    protected function get_preview_url( $original_url ) {
+        $path = $this->get_blog_img_dir( $original_url, true );
+        $preview_filename = $this->get_preview_filename( $original_url );
+
+        if ( file_exists( $path . $preview_filename ) ) {
+            $url = $this->get_blog_img_dir( $original_url, false );
+            return $url . '/' . $preview_filename;
         }
         return false;
+    }
+
+    protected function is_local_image( $img_url ) {
+        return strpos( $img_url, get_site_url() ) === 0;
+    }
+
+    protected function get_blog_img_dir( $img_url, $is_path = true ) {
+        if ( $this->is_local_image( $img_url ) ) {
+            $site_url = get_site_url();
+            $url = substr( $img_url, strlen( $site_url ) );
+            $pre = $is_path ? realpath( ABSPATH ) : $site_url;
+            return pathinfo( $pre . $url, PATHINFO_DIRNAME ) . '/';
+        }
+        $dir = wp_upload_dir( get_the_date( 'Y/m' ) );
+        return $dir[ $is_path ? 'path' : 'url' ] . '/';
+    }
+
+    protected function get_preview_filename( $img_src ) {
+        return pathinfo( $img_src, PATHINFO_FILENAME ) . $this->preview_suffix . '.jpg';
     }
 
     public function is_animation( $filename ) {
@@ -66,34 +87,32 @@ class GIF_Animation_Preview {
         return $count > 1;
     }
 
-    public function generate_preview( $filename ) {
-        $img_path = $this->get_path_from_url( $filename );
-        $preview_file = pathinfo( $img_path, PATHINFO_FILENAME ) . $this->preview_suffix . '.jpg';
-        $image = @imagecreatefromgif( $img_path );
-        if ( $image === false ) {
+    protected function generate_preview( $img_url ) {
+        if ( ! $this->is_animation( $img_url ) ) {
             return false;
         }
+
+        $img_path = $this->get_blog_img_dir( $img_url, true );
+        if ( $this->is_local_image( $img_url ) ) {
+            $image = imagecreatefromgif( $img_path . pathinfo( $img_url, PATHINFO_BASENAME ));
+        } else {
+            //FIXME: curl?
+            $image = imagecreatefromgif( $img_url );
+        }
+        if ( ! $image ) {
+            return false;
+        }
+
+        $preview_file = $this->get_preview_filename( $img_url );
         $w = imagesx( $image );
         $h = imagesy( $image );
         $cut = imagecreatetruecolor( $w, $h );
         imagecopy( $cut, $image, 0, 0, 0, 0, $w, $h );
-        $res = imagejpeg( $cut, dirname( $img_path ) . '/' . $preview_file, 80 );
-        if (! $res) {
+        $res = imagejpeg( $cut, $img_path . $preview_file, 80 );
+        if ( ! $res ) {
             return false;
         }
-        return pathinfo( $filename, PATHINFO_DIRNAME ) . '/' . $preview_file;
-    }
-
-    private function get_path_from_url( $filename ) {
-        $site_url = get_site_url();
-        if ( strpos( $filename, $site_url ) === 0 ) {
-            $url = substr( $filename, strlen( $site_url ) );
-            if ( substr( $url, 0, 1 ) != '/' ) {
-                $url = '/' . $url;
-            }
-            return realpath( ABSPATH ) . $url;
-        }
-        return false;
+        return $this->get_blog_img_dir( $img_url, false ) . $preview_file;
     }
 }
 ?>
