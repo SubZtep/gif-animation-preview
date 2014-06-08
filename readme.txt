@@ -1,6 +1,6 @@
 === Plugin Name ===
 Contributors: subztep
-Tags: gif
+Tags: gif, images
 Tested up to: 3.9.1
 Stable tag: 1.4
 License: GPLv2 or later
@@ -10,9 +10,9 @@ Replace GIF animations to a single preview image.
 
 == Description ==
 
-Replace GIF animations to a single preview image. Click on the image to start animate, click on again for stop it.
+Replace GIF animations to a single preview image. Click on the image to start animate, click on again for stop it
 
-In this early stage of the plugin there is no additional settings. Good for prevent downloading unwanted large files.
+In this early stage of the plugin there is no additional settings. Good for prevent downloading unwanted large files
 
 What this plugin does is:
 
