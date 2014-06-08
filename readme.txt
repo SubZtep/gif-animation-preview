@@ -22,7 +22,7 @@ What this plugin does is:
 
 [Live Demo](http://demo.land/wordpress/?p=4)
 
-If you experience any unwanted modification on your site, or it's break your template please alert me on the [support page](http://wordpress.org/support/plugin/gif-animation-preview), I'll be happy to help you
+If you experience any unwanted modification on your site, or it breaks your template please alert me on the [support page](http://wordpress.org/support/plugin/gif-animation-preview), I'll be happy to help you
 
 On GitHub:
 https://github.com/SubZtep/gif-animation-preview
