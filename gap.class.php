@@ -71,7 +71,7 @@ class GIF_Animation_Preview {
     }
 
     protected function get_preview_filename( $img_src ) {
-        return pathinfo( $img_src, PATHINFO_FILENAME ) . $this->preview_suffix . '.jpg';
+        return substr( $this->mb_basename( $img_src ), 0, -4 ) . $this->preview_suffix . '.jpg';
     }
 
     public function is_animation( $filename ) {
@@ -94,7 +94,7 @@ class GIF_Animation_Preview {
 
         $img_path = $this->get_blog_img_dir( $img_url, true );
         if ( $this->is_local_image( $img_url ) ) {
-            $image = imagecreatefromgif( $img_path . pathinfo( $img_url, PATHINFO_BASENAME ));
+            $image = imagecreatefromgif( $img_path . $this->mb_basename( $img_url ) );
         } else {
             //FIXME: curl?
             $image = imagecreatefromgif( $img_url );
@@ -113,6 +113,11 @@ class GIF_Animation_Preview {
             return false;
         }
         return $this->get_blog_img_dir( $img_url, false ) . $preview_file;
+    }
+
+    function mb_basename($filepath, $suffix = NULL) {
+        $splited = preg_split ( '/\//', rtrim ( $filepath, '/ ' ) );
+        return substr ( basename ( 'X' . $splited [count ( $splited ) - 1], $suffix ), 1 );
     }
 }
 ?>
