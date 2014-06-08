@@ -6,7 +6,7 @@ Stable tag: 1.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Replace GIF animations to a single preview image.
+Replace GIF animations to a single preview image
 
 == Description ==
 
@@ -21,6 +21,8 @@ What this plugin does is:
 *   Update image tag attribute
 
 [Live Demo](http://demo.land/wordpress/?p=4)
+
+If you experience any unwanted modification on your site, or it's break your template please alert me on the [support page](http://wordpress.org/support/plugin/gif-animation-preview), I'll be happy to help you
 
 On GitHub:
 https://github.com/SubZtep/gif-animation-preview
