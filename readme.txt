@@ -2,7 +2,7 @@
 Contributors: subztep
 Tags: gif
 Tested up to: 3.9.1
-Stable tag: 1.3
+Stable tag: 1.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -16,9 +16,9 @@ In this early stage of the plugin there is no additional settings. Good for prev
 
 What this plugin does is:
 
-*   Find self hosted gif animations
-*   Generate jpeg image to the same folder
-*   Update image tag attributes in the post
+*   Find gif animations in posts
+*   Generate jpeg image
+*   Update image tag attribute
 
 On GitHub:
 https://github.com/SubZtep/gif-animation-preview
@@ -28,11 +28,19 @@ https://github.com/SubZtep/gif-animation-preview
 1. Upload plugin files to the `/wp-content/plugins/gif-animation-preview/` directory
 2. Activate the plugin through the 'Plugins' menu in WordPress
 
+Preview images generated on the fly, first view of the posts might be slow
+
 == Changelog ==
 
+= 1.4 =
+* Allow images from external source
+* Only test image when preview doesn't exists
+* Unicode fixes in filenames
+* Decrase PHP version requirement from 5.2 to 5.0
+
 = 1.3 =
-* Decrase PHP version requirement from 5.4 to 5.2
 * Uses gifplayer and imagesLoaded libraries
+* Decrase PHP version requirement from 5.4 to 5.2
 
 = 1.2 =
 * Add PHP version and GD check
