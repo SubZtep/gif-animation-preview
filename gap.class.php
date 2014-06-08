@@ -32,16 +32,25 @@ class GIF_Animation_Preview {
     function update_src( $src ) {
         // Test only gif
         if ( substr( strtolower( $src[2] ), -4) == '.gif' ) {
-            if ( $this->is_animation( $src[2] ) ) {
-                // Get preview link
-                $new_src = $this->get_preview( $src[2] );
-                if ( $new_src ) {
-                    return $src[1] . $new_src . $src[3] . ' data-gif=' . $src[3] . $src[2] . $src[3];
-                }
+            $new_src = $this->get_preview_url( $src[2] );
+            if ( ! $new_src ) {
+                $new_src = $this->generate_preview( $src[2] );
+            }
+            if ( $new_src ) {
+                return $src[1] . $new_src . $src[3] . ' data-gif=' . $src[3] . $src[2] . $src[3];
             }
         }
         // Not gif nor animation, do nothing
         return $src[0];
+    }
+
+    function get_preview_url( $original_url ) {
+        $img_path = $this->get_path_from_url( $original_url );
+        $preview_filename = pathinfo( $img_path, PATHINFO_FILENAME ) . $this->preview_suffix . '.jpg';
+        if ( file_exists( dirname( $img_path ) . '/' . $preview_filename ) ) {
+            return pathinfo( $original_url, PATHINFO_DIRNAME ) . '/' . $preview_filename;
+        }
+        return false;
     }
 
     public function is_animation( $filename ) {
@@ -55,16 +64,6 @@ class GIF_Animation_Preview {
         }
         fclose( $fh );
         return $count > 1;
-    }
-
-    public function get_preview( $filename ) {
-        $img_path = $this->get_path_from_url( $filename );
-        $preview_filename = pathinfo( $img_path, PATHINFO_FILENAME ) . $this->preview_suffix . '.jpg';
-        if ( file_exists( dirname( $img_path ) . '/' . $preview_filename ) ) {
-            return pathinfo( $filename, PATHINFO_DIRNAME ) . '/' . $preview_filename;
-        } else {
-            return $this->generate_preview( $filename );
-        }
     }
 
     public function generate_preview( $filename ) {
