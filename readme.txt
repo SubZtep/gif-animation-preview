@@ -20,6 +20,8 @@ What this plugin does is:
 *   Generate jpeg image
 *   Update image tag attribute
 
+[Live Demo](http://demo.land/wordpress/?p=4)
+
 On GitHub:
 https://github.com/SubZtep/gif-animation-preview
 
