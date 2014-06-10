@@ -29,12 +29,19 @@ class GIF_Animation_Preview {
 
     protected function update_src( $src ) {
         // Test only gif
-        if ( substr( strtolower( $src[2] ), -4) == '.gif' ) {
-            $new_src = $this->get_preview_url( $src[2] );
+        $gif_src = $src[2];
+        if ( substr( strtolower( $gif_src ), -4) == '.gif' ) {
+
+            if ( preg_match( '/(.*)-\d+x\d+(\.gif)/i', $gif_src, $matches ) ) // if wordpress thumbnail
+                if ( file_exists( $this->get_blog_img_dir( $matches[1] . $matches[2], true ) .
+                                  $this->mb_basename( $matches[1] . $matches[2] ) ) )
+                    $gif_src = $matches[1] . $matches[2];
+
+            $new_src = $this->get_preview_url( $gif_src );
             if ( ! $new_src )
-                $new_src = $this->generate_preview( $src[2] );
+                $new_src = $this->generate_preview( $gif_src );
             if ( $new_src )
-                return $src[1] . $new_src . $src[3] . ' data-gif=' . $src[3] . $src[2] . $src[3];
+                return $src[1] . $new_src . $src[3] . ' data-gif=' . $src[3] . $gif_src . $src[3];
         }
         // Not gif nor animation, do nothing
         return $src[0];
