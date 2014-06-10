@@ -1,8 +1,9 @@
 === Plugin Name ===
 Contributors: subztep
+Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=64V8Y63QZLTTS
 Tags: gif, images
 Tested up to: 3.9.1
-Stable tag: 1.4
+Stable tag: 1.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -22,8 +23,6 @@ What this plugin does is:
 
 [Live Demo](http://demo.land/wordpress/?p=4)
 
-If you experience any unwanted modification on your site, or it breaks your template please alert me on the [support page](http://wordpress.org/support/plugin/gif-animation-preview), I'll be happy to help you
-
 On GitHub:
 https://github.com/SubZtep/gif-animation-preview
 
@@ -35,6 +34,9 @@ https://github.com/SubZtep/gif-animation-preview
 Preview images generated on the fly, first view of the posts might be slow
 
 == Changelog ==
+
+= 1.5 =
+* Handle Wordpress's static preview
 
 = 1.4 =
 * Allow images from external source
