@@ -3,14 +3,30 @@ class GIF_Animation_Preview {
 
     public $preview_suffix = '-gap'; // Preview image filename suffix
 
-    private static $plugin;
+    protected static $plugin;
     static function load() {
         $class = __CLASS__;
         return ( self::$plugin ? self::$plugin : ( self::$plugin = new $class() ) );
     }
 
-    private function __construct() {
+    protected function __construct() {
+        add_action( 'init', array( $this, 'register_scripts' ) );
+        add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
         add_action( 'the_content', array( $this, 'replace_gifs' ) );
+    }
+
+    public function register_scripts() {
+        wp_register_script( 'gifplayer', plugins_url( '/jquery.gifplayer.min.js', __FILE__ ), array( 'jquery' ), '0.1.4' );
+        wp_register_script( 'imagesloaded', plugins_url( '/imagesloaded.pkgd.min.js', __FILE__ ), array(), '0.1.4' );
+        wp_register_script( 'gif_animation_preview', plugins_url( '/plugin.js', __FILE__ ), array('jquery', 'gifplayer', 'imagesloaded') );
+        wp_register_style( 'gifplayer', plugins_url( '/gifplayer.min.css', __FILE__ ), array(), '0.1.4' );
+    }
+
+    public function enqueue_scripts() {
+        wp_enqueue_script( 'gifplayer' );
+        wp_enqueue_script( 'imagesloaded' );
+        wp_enqueue_script( 'gif_animation_preview' );
+        wp_enqueue_style( 'gifplayer' );
     }
 
     public function replace_gifs( $content ) {

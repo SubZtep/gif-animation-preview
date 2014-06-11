@@ -2,7 +2,7 @@
 /*
 Plugin Name: GIF Animation Preview
 Plugin URI: http://wordpress.org/plugins/gif-animation-preview/
-Description: Replace GIF animations to a single preview image. Click on the image to start animate.
+Description: Replace GIF animations to a static preview image. Click on the image to start animate
 Version: 1.5
 Author: Andras Serfozo
 Author URI: http://twitter.com/SubZtep
@@ -27,26 +27,16 @@ function gap_test_env() {
     return true;
 }
 
-function gif_animation_preview_init() {
-    wp_register_script( 'gifplayer', plugins_url( '/jquery.gifplayer.min.js', __FILE__ ), array( 'jquery' ), '0.1.4' );
-    wp_register_script( 'imagesloaded', plugins_url( '/imagesloaded.pkgd.min.js', __FILE__ ), array(), '0.1.4' );
-    wp_register_script( 'gif_animation_preview', plugins_url( '/plugin.js', __FILE__ ), array('jquery', 'gifplayer', 'imagesloaded') );
-    wp_register_style( 'gifplayer', plugins_url( '/gifplayer.min.css', __FILE__ ), array(), '0.1.4' );
-}
+define( 'GAP_TYPE_OPTION_NAME', 'gap-type' );
+define( 'GAP_TYPE_ALWAYS_PREVIEW', 1 );
+define( 'GAP_TYPE_LOOP_PREVIEW', 2 );
+define( 'GAP_TYPE_NEVER_PREVIEW', 3 );
 
-function gif_animation_preview_enqueue_scripts() {
-    wp_enqueue_script( 'gifplayer' );
-    wp_enqueue_script( 'imagesloaded' );
-    wp_enqueue_script( 'gif_animation_preview' );
-    wp_enqueue_style( 'gifplayer' );
-}
-
-if (! is_admin()) {
-    add_action('init', 'gif_animation_preview_init');
-    add_action('wp_enqueue_scripts', 'gif_animation_preview_enqueue_scripts');
-
+if ( is_admin() ) {
+    require_once( __DIR__ . '/settings.class.php' );
+    GAP_Settings_Page::load();
+} else {
     require_once( __DIR__ . '/gap.class.php' );
     GIF_Animation_Preview::load();
 }
-
 ?>
