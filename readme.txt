@@ -42,9 +42,9 @@ No. It can't be sure you use the preview image somewhere else. If you don't need
 
 No, it only generated clean image with separated play button on the top
 
-= Does this plugin modify anything in my database? =
+= Does this plugin modify anything in my post database? =
 
-No, everything is happening on the fly, once you deactivate, you get back your original posts
+No, everything is happening on the fly. Once you deactivate, you get back your original posts
 
 == Changelog ==
 
