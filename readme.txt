@@ -44,7 +44,7 @@ No, it only generated clean image with separated play button on the top
 
 = Does this plugin modify anything in my database? =
 
-No, everything is happening on the fly. Once you deactivate, you get back your original posts (fyi it stores your settings in option table, as usual)
+No, everything is happening on the fly. Once you deactivate, you get back your original posts (fyi it stores your settings in wp_options table, as usual)
 
 == Changelog ==
 
