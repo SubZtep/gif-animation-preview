@@ -10,15 +10,20 @@ class GIF_Animation_Preview {
     }
 
     protected function __construct() {
-        add_action( 'init', array( $this, 'register_scripts' ) );
+        add_action( 'get_header', array( $this, 'register_scripts' ) );
         add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
-        add_action( 'the_content', array( $this, 'replace_gifs' ) );
+        add_filter( 'the_content', array( $this, 'replace_gifs' ) );
     }
 
     public function register_scripts() {
-        wp_register_script( 'gifplayer', plugins_url( '/jquery.gifplayer.min.js', __FILE__ ), array( 'jquery' ), '0.1.4' );
-        wp_register_script( 'imagesloaded', plugins_url( '/imagesloaded.pkgd.min.js', __FILE__ ), array(), '0.1.4' );
-        wp_register_script( 'gif_animation_preview', plugins_url( '/plugin.js', __FILE__ ), array('jquery', 'gifplayer', 'imagesloaded') );
+        switch ( get_option( GAP_TYPE_OPTION_NAME, GAP_TYPE_ALWAYS_PREVIEW ) ) {
+            case GAP_TYPE_NEVER_PREVIEW: $js = 'plugin-auto.js'; break;
+            case GAP_TYPE_LOOP_PREVIEW: $js = is_singular() ? 'plugin-auto.js' : 'plugin.js'; break;
+            default: $js = 'plugin.js';
+        }
+        wp_register_script( 'gifplayer', plugins_url( '/gapplayer.min.js', __FILE__ ), array( 'jquery' ), '0.1.4' );
+        wp_register_script( 'imagesloaded', plugins_url( '/imagesloaded.pkgd.min.js', __FILE__ ), array(), '0.1.0' );
+        wp_register_script( 'gif_animation_preview', plugins_url( '/' . $js, __FILE__ ), array('jquery', 'gifplayer', 'imagesloaded') );
         wp_register_style( 'gifplayer', plugins_url( '/gifplayer.min.css', __FILE__ ), array(), '0.1.4' );
     }
 
