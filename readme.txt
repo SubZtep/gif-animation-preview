@@ -3,7 +3,7 @@ Contributors: subztep
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=64V8Y63QZLTTS
 Tags: gif, images
 Tested up to: 3.9.1
-Stable tag: 1.5
+Stable tag: 1.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -11,15 +11,9 @@ Replace GIF animations to a single preview image
 
 == Description ==
 
-Replace GIF animations to a single preview image. Click on the image to start animate, click on again for stop it
+This plugin finds every GIF animation in your posts and replace it to a preview image. Doesn't matter the GIF embedded from another website or use WordPress's static thumbnail. It automatically generates the preview image from the first frame of the animation and save it to the post's media directory with `-gap.jpg` suffix
 
-In this early stage of the plugin there is no additional settings. Good for prevent downloading unwanted large files
-
-What this plugin does is:
-
-*   Find gif animations in posts
-*   Generate jpeg image
-*   Update image tag attribute
+Posts show the pregenareted small size jpeg file first, your visitors don't need to wait for download the huge animation. Play animation after they click on the image or after your whole page has downloaded. It depends on your setting
 
 [Live Demo](http://demo.land/wordpress/?p=4)
 
@@ -30,10 +24,33 @@ https://github.com/SubZtep/gif-animation-preview
 
 1. Upload plugin files to the `/wp-content/plugins/gif-animation-preview/` directory
 2. Activate the plugin through the 'Plugins' menu in WordPress
+3. Find Settings > GIF Animation Preview on your admin interface
 
 Preview images generated on the fly, first view of the posts might be slow
 
+== Frequently Asked Questions ==
+
+= Does plugin load gif animation directly with preview =
+
+GIF loads after clicking at preview, actually it makes pageload faster
+
+= Does it delete the generated preview image after delete the original post or original image? =
+
+No. It can't be sure you use the preview image somewhere else. If you don't need preview anymore you need to delete it by yourself from the media directory
+
+= Does it add any watermark on the preview image? =
+
+No, it only generated clean image with separated play button on the top
+
+= Does this plugin modify anything in my database? =
+
+No, everything is happening on the fly, once you deactivate, you get back your original posts
+
 == Changelog ==
+
+= 1.6 =
+* Admin interface for preview method
+* Started own fork of GifPlayer JavaScript
 
 = 1.5 =
 * Handle Wordpress's static preview
