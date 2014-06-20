@@ -2,8 +2,8 @@
 /*
 Plugin Name: GIF Animation Preview
 Plugin URI: http://wordpress.org/plugins/gif-animation-preview/
-Description: Replace GIF animations to a static preview image. Click on the image to start animate
-Version: 1.6
+Description: Replace GIF animations to a static preview image
+Version: 1.6.1
 Author: Andras Serfozo
 Author URI: http://twitter.com/SubZtep
 License: GPLv2 or later
@@ -33,10 +33,10 @@ define( 'GAP_TYPE_LOOP_PREVIEW', 2 );
 define( 'GAP_TYPE_NEVER_PREVIEW', 3 );
 
 if ( is_admin() ) {
-    require_once( __DIR__ . '/settings.class.php' );
+    require_once( dirname( __FILE__ ) . '/settings.class.php' );
     GAP_Settings_Page::load();
 } else {
-    require_once( __DIR__ . '/gap.class.php' );
+    require_once( dirname( __FILE__ ) . '/gap.class.php' );
     GIF_Animation_Preview::load();
 }
 ?>

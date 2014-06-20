@@ -3,11 +3,11 @@ Contributors: subztep
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=64V8Y63QZLTTS
 Tags: gif, images
 Tested up to: 3.9.1
-Stable tag: 1.6
+Stable tag: 1.6.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Replace GIF animations to a single preview image
+Replace GIF animations to a static preview image
 
 == Description ==
 
@@ -47,6 +47,9 @@ No, it only generated clean image with separated play button on the top
 No, everything is happening on the fly. Once you deactivate, you get back your original posts (fyi it stores your settings in wp_options table, as usual)
 
 == Changelog ==
+
+= 1.6.1 =
+* Better PHP 5.0 compatibility
 
 = 1.6 =
 * Admin interface for preview method
