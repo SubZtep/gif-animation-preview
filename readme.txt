@@ -3,7 +3,7 @@ Contributors: subztep
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=64V8Y63QZLTTS
 Tags: gif, images
 Tested up to: 3.9.1
-Stable tag: 1.7
+Stable tag: 1.7.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -47,6 +47,9 @@ No, it only generated clean image with separated play button on the top
 No, everything is happening on the fly. Once you deactivate, you get back your original posts (fyi it stores your settings in wp_options table, as usual)
 
 == Changelog ==
+
+= 1.7.1 =
+* Able to prevent automatically start animations only on mobile browsers
 
 = 1.7 =
 * Preload images on non-mobile browsers
