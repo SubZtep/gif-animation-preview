@@ -10,5 +10,10 @@ jQuery(function($) {
         gifs.gapPlayer({
             autoLoad: playerAutoStart
         });
+        if (gapParams.isMobile == 'no') {
+            gifs.each(function(idx, item) {
+                (new Image()).src = $(item).attr('data-gif');
+            });
+        }
     });
 });
