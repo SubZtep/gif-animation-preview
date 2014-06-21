@@ -3,7 +3,7 @@ Contributors: subztep
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=64V8Y63QZLTTS
 Tags: gif, images
 Tested up to: 3.9.1
-Stable tag: 1.7.1
+Stable tag: 1.8
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -48,7 +48,7 @@ No, everything is happening on the fly. Once you deactivate, you get back your o
 
 == Changelog ==
 
-= 1.7.1 =
+= 1.8 =
 * Able to prevent automatically start animations only on mobile browsers
 
 = 1.7 =
