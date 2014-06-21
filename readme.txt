@@ -3,7 +3,7 @@ Contributors: subztep
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=64V8Y63QZLTTS
 Tags: gif, images
 Tested up to: 3.9.1
-Stable tag: 1.6.1
+Stable tag: 1.7
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -30,9 +30,9 @@ Preview images generated on the fly, first view of the posts might be slow
 
 == Frequently Asked Questions ==
 
-= Does plugin load gif animation directly with preview =
+= Does plugin load gif animation directly with preview? =
 
-GIF loads after clicking at preview, actually it makes pageload faster
+GIF loads after clicking at preview on mobile browsers but loads automatically on desktops
 
 = Does it delete the generated preview image after delete the original post or original image? =
 
@@ -47,6 +47,11 @@ No, it only generated clean image with separated play button on the top
 No, everything is happening on the fly. Once you deactivate, you get back your original posts (fyi it stores your settings in wp_options table, as usual)
 
 == Changelog ==
+
+= 1.7 =
+* Preload images on non-mobile browsers
+* Faster load (less js, includes at the bottom)
+* Upgrade imagesLoaded plugin to v3.1.8
 
 = 1.6.1 =
 * Better PHP 5.0 compatibility

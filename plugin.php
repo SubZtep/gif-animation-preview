@@ -3,21 +3,19 @@
 Plugin Name: GIF Animation Preview
 Plugin URI: http://wordpress.org/plugins/gif-animation-preview/
 Description: Replace GIF animations to a static preview image
-Version: 1.6.1
+Version: 1.7
 Author: Andras Serfozo
 Author URI: http://twitter.com/SubZtep
 License: GPLv2 or later
 */
-register_activation_hook(__FILE__, 'gap_test_env');
+register_activation_hook( __FILE__, 'gap_test_env' );
 
 function gap_test_env() {
     $errors = array();
-    if ( version_compare( PHP_VERSION, '5.0', '<' ) ) {
+    if ( version_compare( PHP_VERSION, '5.0', '<' ) )
         $errors[] = 'This plugin requires at least PHP version 5.0';
-    }
-    if ( ! extension_loaded( 'gd' ) || ! function_exists( 'gd_info' ) ) {
+    if ( ! extension_loaded( 'gd' ) || ! function_exists( 'gd_info' ) )
         $errors[] = 'This plugin requires GD support';
-    }
     if ( ! empty( $errors ) ) {
         deactivate_plugins( basename( __FILE__ ) );
         wp_die( implode( '<br />', $errors ) . '<br /><br />Please contact with your hosting provider',

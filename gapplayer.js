@@ -19,6 +19,9 @@
  				this.spinnerElement.show();
  				this.loadGif();
  			}
+ 			if (this.options.preLoad) {
+ 				(new Image()).src = this.getGifSrc();
+ 			}
  		},
 
  		wrap: function(){
@@ -146,7 +149,19 @@
 
  	$.fn.gapPlayer.defaults = {
  		label: 'gif',
- 		autoLoad: false
+ 		autoLoad: false,
+ 		preLoad: false
  	};
 
  })(jQuery);
+
+// Start plugin
+jQuery(function($) {
+    var gifs = $('img[data-gif]');
+    gifs.imagesLoaded(function() {
+        gifs.gapPlayer({
+            autoLoad: gapParams.autoLoad == 'yes',
+            preLoad: gapParams.preLoad == 'no'
+        });
+    });
+});
