@@ -32,7 +32,7 @@ Preview images generated on the fly, first view of the posts might be slow
 
 = Does plugin load gif animation directly with preview? =
 
-GIF loads after clicking at preview on mobile browsers but loads automatically on desktops
+Animation loads after clicking at preview on mobile browsers but loads automatically on desktops
 
 = Does it delete the generated preview image after delete the original post or original image? =
 

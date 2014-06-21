@@ -39,6 +39,23 @@ class GAP_Settings_Page
             'gap-setting',
             'type-section'
         );
+
+
+        register_setting( 'type-group', GAP_MOBILE_OPTION_NAME );
+        add_settings_section(
+            'mobile-section',
+            null,
+            null,
+            'gap-setting'
+        );
+
+        add_settings_field(
+            'mobile-field',
+            'Please Choose Mobile View',
+            array( $this, 'mobile_field_callback' ),
+            'gap-setting',
+            'mobile-section'
+        );
     }
 
     public function type_section_callback() {
@@ -70,6 +87,18 @@ class GAP_Settings_Page
                 echo GAP_TYPE_NEVER_PREVIEW == $type ? ' checked="checked"' : ''; ?> />
             Never Preview<br />
             <p class="description">Don't stop animations, lazy load only without play button. Your site's page load is still become faster</p>
+        </label>
+        <?php
+    }
+
+    public function mobile_field_callback() {
+        $mobile = get_option( GAP_MOBILE_OPTION_NAME, 0 );
+        ?>
+        <label>
+            <input type="checkbox" name="<?php echo GAP_MOBILE_OPTION_NAME; ?>" value="1"<?php
+                echo $mobile == 1 ? ' checked="checked"' : ''; ?> />
+            Always Preview on mobile browsers<br />
+            <p class="description">Tick for prevent auto start on mobile browsers, whatever is your method setting</p><br />
         </label>
         <?php
     }

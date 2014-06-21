@@ -20,11 +20,14 @@ class GIF_Animation_Preview {
         wp_register_script( 'gapplayer', plugins_url( '/gapplayer.min.js', __FILE__ ), array( 'jquery' ), '1.7', true );
         wp_register_script( 'imagesloaded', plugins_url( '/imagesloaded.pkgd.min.js', __FILE__ ), array(), '3.1.8', true );
 
-        switch ( get_option( GAP_TYPE_OPTION_NAME, GAP_TYPE_ALWAYS_PREVIEW ) ) {
-            case GAP_TYPE_NEVER_PREVIEW: $auto_load = true; break;
-            case GAP_TYPE_LOOP_PREVIEW: $auto_load = is_singular(); break;
-            default: $auto_load = false;
-        }
+        if ( get_option( GAP_MOBILE_OPTION_NAME ) == 1 && wp_is_mobile() )
+            $auto_load = false;
+        else
+            switch ( get_option( GAP_TYPE_OPTION_NAME, GAP_TYPE_ALWAYS_PREVIEW ) ) {
+                case GAP_TYPE_NEVER_PREVIEW: $auto_load = true; break;
+                case GAP_TYPE_LOOP_PREVIEW: $auto_load = is_singular(); break;
+                default: $auto_load = false;
+            }
         wp_localize_script( 'gapplayer', 'gapParams', array(
             'autoLoad' => $auto_load ? 'yes' : 'no',
             'preLoad' => wp_is_mobile() ? 'yes' : 'no'
