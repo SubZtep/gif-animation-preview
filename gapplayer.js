@@ -136,15 +136,15 @@
 
  	};
 
- 	$.fn.gapplayer = function(options) {
+ 	$.fn.gapPlayer = function(options) {
  		this.each(function(){
- 			options = $.extend({}, $.fn.gapplayer.defaults, options);
- 			var gapplayer = new GapPlayer($(this), options);
- 			gapplayer.activate();
+ 			options = $.extend({}, $.fn.gapPlayer.defaults, options);
+ 			var gapPlayer = new GapPlayer($(this), options);
+ 			gapPlayer.activate();
  		});
  	};
 
- 	$.fn.gapplayer.defaults = {
+ 	$.fn.gapPlayer.defaults = {
  		label: 'gif',
  		autoLoad: false
  	};
