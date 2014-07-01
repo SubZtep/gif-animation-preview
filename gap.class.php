@@ -16,8 +16,8 @@ class GIF_Animation_Preview {
     }
 
     public function register_scripts() {
-        wp_register_style( 'gifplayer', plugins_url( '/gifplayer.min.css', __FILE__ ), array(), '0.1.4' );
-        wp_register_script( 'gapplayer', plugins_url( '/gapplayer.min.js', __FILE__ ), array( 'jquery' ), '1.7', true );
+        wp_register_style( 'gapplayer', plugins_url( '/gapplayer.min.css', __FILE__ ), array(), '1.8.2' );
+        wp_register_script( 'gapplayer', plugins_url( '/gapplayer.min.js', __FILE__ ), array( 'jquery' ), '1.8.2', true );
         wp_register_script( 'imagesloaded', plugins_url( '/imagesloaded.pkgd.min.js', __FILE__ ), array(), '3.1.8', true );
 
         if ( get_option( GAP_MOBILE_OPTION_NAME ) == 1 && wp_is_mobile() )
@@ -35,7 +35,7 @@ class GIF_Animation_Preview {
     }
 
     public function enqueue_scripts() {
-        wp_enqueue_style( 'gifplayer' );
+        wp_enqueue_style( 'gapplayer' );
         wp_enqueue_script( 'imagesloaded' );
         wp_enqueue_script( 'gapplayer' );
     }

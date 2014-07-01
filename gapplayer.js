@@ -25,10 +25,10 @@
  		},
 
  		wrap: function(){
- 			this.wrapper = this.previewElement.wrap("<div class='gifplayer-wrapper'></div>").parent();
+ 			this.wrapper = this.previewElement.wrap("<div class='gapplayer-wrapper'></div>").parent();
  			this.wrapper.css('width', this.previewElement.width());
  			this.wrapper.css('height', this.previewElement.height());
- 			this.previewElement.addClass('gifplayer');
+ 			this.previewElement.addClass('gapplayer');
  			this.previewElement.css('cursor','pointer');
  		},
 
@@ -156,12 +156,15 @@
  })(jQuery);
 
 // Start plugin
-jQuery(function($) {
-    var gifs = $('img[data-gif]');
+function gapStart() {
+    var gifs = jQuery('img[data-gif]:not(.gapplayer)');
     gifs.imagesLoaded(function() {
         gifs.gapPlayer({
             autoLoad: gapParams.autoLoad == 'yes',
             preLoad: gapParams.preLoad == 'no'
         });
     });
+}
+jQuery(function() {
+    gapStart(); // Start for current dom (use this for callbacks)
 });

@@ -2,7 +2,7 @@
 Contributors: subztep
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=64V8Y63QZLTTS
 Tags: gif, images
-Tested up to: 3.9.1
+Tested up to: 3.9.2
 Stable tag: 1.8.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -46,7 +46,14 @@ No, it only generated clean image with separated play button on the top
 
 No, everything is happening on the fly. Once you deactivate, you get back your original posts (fyi it stores your settings in wp_options table, as usual)
 
+= Can I use it with Infinite scroll plugin? =
+
+Yes, you need to add `gapStart();` to the callback area
+
 == Changelog ==
+
+= 1.8.2 =
+* Support infinite scroll with callback
 
 = 1.8.1 =
 * Better GIF animation detection
