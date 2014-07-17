@@ -165,6 +165,8 @@ class GAP_Settings_Page
         <?php do_settings_sections( 'gap-setting' ); ?>
         <?php submit_button(); ?>
         </form>
+        <p><strong>Note:</strong> Start this plugin again for unhandled images with <strong><i>gapStart();</i></strong> command,
+            for infinite scroll plugin or similars</p>
         </div>
         <?php
     }
