@@ -48,13 +48,42 @@ class GAP_Settings_Page
             null,
             'gap-setting'
         );
-
         add_settings_field(
             'mobile-field',
             'Please Choose Mobile View',
             array( $this, 'mobile_field_callback' ),
             'gap-setting',
             'mobile-section'
+        );
+
+        register_setting( 'type-group', GAP_EFFECT_OPTION_NAME );
+        add_settings_section(
+            'effect-section',
+            null,
+            null,
+            'gap-setting'
+        );
+        add_settings_field(
+            'effect-field',
+            'Please Choose switch effect',
+            array( $this, 'effect_field_callback' ),
+            'gap-setting',
+            'effect-section'
+        );
+
+        register_setting( 'type-group', GAP_HOVER_OPTION_NAME );
+        add_settings_section(
+            'hover-section',
+            null,
+            null,
+            'gap-setting'
+        );
+        add_settings_field(
+            'hovert-field',
+            'Please Choose start event',
+            array( $this, 'hover_field_callback' ),
+            'gap-setting',
+            'hover-section'
         );
     }
 
@@ -99,6 +128,30 @@ class GAP_Settings_Page
                 echo $mobile == 1 ? ' checked="checked"' : ''; ?> />
             Always Preview on mobile browsers<br />
             <p class="description">Tick for prevent auto start on mobile browsers, whatever is your method setting</p><br />
+        </label>
+        <?php
+    }
+
+    public function effect_field_callback() {
+        $mobile = get_option( GAP_EFFECT_OPTION_NAME, 0 );
+        ?>
+        <label>
+            <input type="checkbox" name="<?php echo GAP_EFFECT_OPTION_NAME; ?>" value="1"<?php
+                echo $mobile == 1 ? ' checked="checked"' : ''; ?> />
+            Do fade between video and image<br />
+            <p class="description">When you stop animation the last frame will does fade out effect on top preview image</p><br />
+        </label>
+        <?php
+    }
+
+    public function hover_field_callback() {
+        $mobile = get_option( GAP_HOVER_OPTION_NAME, 0 );
+        ?>
+        <label>
+            <input type="checkbox" name="<?php echo GAP_HOVER_OPTION_NAME; ?>" value="1"<?php
+                echo $mobile == 1 ? ' checked="checked"' : ''; ?> />
+            Start animation on mouse hover<br />
+            <p class="description">Mouse move over an image starts change event, like a click</p><br />
         </label>
         <?php
     }

@@ -30,6 +30,9 @@ define( 'GAP_TYPE_ALWAYS_PREVIEW', 1 );
 define( 'GAP_TYPE_LOOP_PREVIEW', 2 );
 define( 'GAP_TYPE_NEVER_PREVIEW', 3 );
 define( 'GAP_MOBILE_OPTION_NAME', 'gap-mobile' );
+define( 'GAP_EFFECT_OPTION_NAME', 'gap-effect' );
+define( 'GAP_HOVER_OPTION_NAME', 'gap-hover' );
+
 
 if ( is_admin() ) {
     require_once( dirname( __FILE__ ) . '/settings.class.php' );
