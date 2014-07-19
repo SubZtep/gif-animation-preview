@@ -8,7 +8,16 @@ Author: Andras Serfozo
 Author URI: http://twitter.com/SubZtep
 License: GPLv2 or later
 */
+define( 'GAP_TYPE_OPTION_NAME', 'gap-type' );
+define( 'GAP_TYPE_ALWAYS_PREVIEW', 1 );
+define( 'GAP_TYPE_LOOP_PREVIEW', 2 );
+define( 'GAP_TYPE_NEVER_PREVIEW', 3 );
+define( 'GAP_MOBILE_OPTION_NAME', 'gap-mobile' );
+define( 'GAP_EFFECT_OPTION_NAME', 'gap-effect' );
+define( 'GAP_HOVER_OPTION_NAME', 'gap-hover' );
+
 register_activation_hook( __FILE__, 'gap_test_env' );
+register_uninstall_hook( __FILE__, 'gap_del_options' );
 
 function gap_test_env() {
     $errors = array();
@@ -22,16 +31,21 @@ function gap_test_env() {
                'Plugin Activation Error',
                array( 'response' => 200, 'back_link' => true ) );
     }
+
+    add_option( GAP_TYPE_OPTION_NAME, GAP_TYPE_LOOP_PREVIEW );
+    add_option( GAP_MOBILE_OPTION_NAME, 1 );
+    add_option( GAP_EFFECT_OPTION_NAME, 1 );
+    add_option( GAP_HOVER_OPTION_NAME, 1 );
+
     return true;
 }
 
-define( 'GAP_TYPE_OPTION_NAME', 'gap-type' );
-define( 'GAP_TYPE_ALWAYS_PREVIEW', 1 );
-define( 'GAP_TYPE_LOOP_PREVIEW', 2 );
-define( 'GAP_TYPE_NEVER_PREVIEW', 3 );
-define( 'GAP_MOBILE_OPTION_NAME', 'gap-mobile' );
-define( 'GAP_EFFECT_OPTION_NAME', 'gap-effect' );
-define( 'GAP_HOVER_OPTION_NAME', 'gap-hover' );
+function gap_del_options() {
+    delete_option( GAP_TYPE_OPTION_NAME );
+    delete_option( GAP_MOBILE_OPTION_NAME );
+    delete_option( GAP_EFFECT_OPTION_NAME );
+    delete_option( GAP_HOVER_OPTION_NAME );
+}
 
 
 if ( is_admin() ) {
