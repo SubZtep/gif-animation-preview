@@ -83,12 +83,12 @@
 			if (! this.gifLoaded) {
 				this.enableAbort();
 			}
-			var that = this,
-				onEvent = that.options.hover ? 'click mouseleave' : 'click',
+			var gp = this,
+				onEvent = gp.options.hover ? 'click mouseleave' : 'click',
 				gifSrc = this.getGifSrc(),
 				gifWidth = this.previewElement.width(),
-				gifHeight = this.previewElement.height(),
-				gp = this;
+				gifHeight = this.previewElement.height();
+				
 			gp.gifElement = $("<img src='" + gifSrc + "' width='" + gifWidth + "' height=' "+ gifHeight + " '/>");
 			this.gifElement.load(function() {
 				gp.gifLoaded = true;
@@ -97,15 +97,35 @@
 							'position': 'absolute',
 							'top': '0',
 							'left': '0'});
-				gp.previewElement.hide();
-				gp.wrapper.append(gp.gifElement);
-				gp.spinnerElement.hide();
+
+				// Start animation
+				if (gp.options.effect) {
+					gp.gifElement.hide();
+					gp.spinnerElement.hide();
+					gp.wrapper.append(gp.gifElement);
+					gp.gifElement.fadeIn(function() {
+						gp.previewElement.hide();
+					});
+				} else {
+					gp.previewElement.hide();
+					gp.wrapper.append(gp.gifElement);
+					gp.spinnerElement.hide();
+				}
 
 				$(this).on(onEvent, function(e) {
-					that.preventStart = that.options.hover && e.type == 'click';
-					$(this).remove();
-					gp.previewElement.show();
-					gp.playElement.show();
+					gp.preventStart = gp.options.hover && e.type == 'click';
+
+					// Stop animation
+					if (gp.options.effect) {
+						gp.previewElement.show();
+						gp.playElement.show();
+						$(this).fadeOut();
+					} else {
+						$(this).remove();
+						gp.previewElement.show();
+						gp.playElement.show();
+					}
+
 					e.preventDefault();
 					e.stopPropagation();
 				});
@@ -160,6 +180,7 @@
 		label: 'gif',
 		autoLoad: false,
 		preLoad: false,
+		effect: false,
 		hover: false
 	};
 
@@ -169,6 +190,7 @@
 		gifs.gapPlayer({
 			autoLoad: gapParams.autoLoad == 'yes',
 			preLoad: gapParams.preLoad == 'no',
+			effect: gapParams.effect == 'yes',
 			hover: gapParams.hover == 'yes'
 		});
 	});
