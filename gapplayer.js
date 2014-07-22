@@ -149,7 +149,7 @@
 	};
 
 	$.fn.gapPlayer = function(options) {
-		this.each(function() {
+		return this.each(function() {
 			options = $.extend({}, $.fn.gapPlayer.defaults, options);
 			var gapPlayer = new GapPlayer($(this), options);
 			gapPlayer.activate();
