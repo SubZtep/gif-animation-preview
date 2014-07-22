@@ -5,7 +5,6 @@
 		this.spinnerElement = $("<div class = 'spinner'></div>");
 		this.options = options;
 		this.gifLoaded = false;
-		this.preventStart = false;
 	}
 
 	GapPlayer.prototype = {
@@ -50,7 +49,7 @@
 		},
 
 		addEvents: function() {
-			var onEvent = this.options.hover ? 'click mouseenter' : 'click',
+			var onEvent = this.options.hover ? 'mouseenter' : 'click',
 				gp = this;
 			gp.playElement.on(onEvent, function(e) {
 				$(this).hide();
@@ -60,7 +59,7 @@
 				e.stopPropagation();
 			});
 			gp.previewElement.on(onEvent, function(e) {
-				if (gp.playElement.is(':visible') && ! gp.preventStart) {
+				if (gp.playElement.is(':visible')) {
 					gp.playElement.hide();
 					gp.spinnerElement.show();
 					gp.loadGif();
@@ -68,11 +67,6 @@
 				e.preventDefault();
 				e.stopPropagation();
 			});
-			if (gp.options.hover) {
-				gp.previewElement.on('mouseleave', function(e) {
-					gp.preventStart = false;
-				});
-			}
 			gp.spinnerElement.on(onEvent, function(e) {
 				e.preventDefault();
 				e.stopPropagation();
@@ -84,7 +78,7 @@
 				this.enableAbort();
 			}
 			var gp = this,
-				onEvent = gp.options.hover ? 'click mouseleave' : 'click',
+				onEvent = gp.options.hover ? 'mouseleave' : 'click',
 				gifSrc = this.getGifSrc(),
 				gifWidth = this.previewElement.width(),
 				gifHeight = this.previewElement.height();
@@ -93,8 +87,7 @@
 			this.gifElement.load(function() {
 				gp.gifLoaded = true;
 				gp.resetEvents();
-				$(this).css({'cursor': 'pointer',
-							'position': 'absolute',
+				$(this).css({'position': 'absolute',
 							'top': '0',
 							'left': '0'});
 
@@ -103,6 +96,7 @@
 					gp.gifElement.hide();
 					gp.spinnerElement.hide();
 					gp.wrapper.append(gp.gifElement);
+					gp.gifElement.stop().fadeOut();
 					gp.gifElement.fadeIn(function() {
 						gp.previewElement.hide();
 					});
@@ -113,12 +107,12 @@
 				}
 
 				$(this).on(onEvent, function(e) {
-					gp.preventStart = gp.options.hover && e.type == 'click';
 
 					// Stop animation
 					if (gp.options.effect) {
 						gp.previewElement.show();
 						gp.playElement.show();
+						$(this).stop().fadeIn();
 						$(this).fadeOut();
 					} else {
 						$(this).remove();
