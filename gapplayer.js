@@ -96,8 +96,7 @@
 					gp.gifElement.hide();
 					gp.spinnerElement.hide();
 					gp.wrapper.append(gp.gifElement);
-					gp.gifElement.stop().fadeOut();
-					gp.gifElement.fadeIn(function() {
+					gp.gifElement.stop(true).fadeIn(function() {
 						gp.previewElement.hide();
 					});
 				} else {
@@ -112,8 +111,7 @@
 					if (gp.options.effect) {
 						gp.previewElement.show();
 						gp.playElement.show();
-						$(this).stop().fadeIn();
-						$(this).fadeOut();
+						$(this).stop(true).fadeOut();
 					} else {
 						$(this).remove();
 						gp.previewElement.show();
