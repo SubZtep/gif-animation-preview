@@ -105,22 +105,24 @@
 					gp.spinnerElement.hide();
 				}
 
-				$(this).on(onEvent, function(e) {
+				if (! gp.options.autoLoad) {
+					$(this).on(onEvent, function(e) {
 
-					// Stop animation
-					if (gp.options.effect) {
-						gp.previewElement.show();
-						gp.playElement.show();
-						$(this).stop(true).fadeOut();
-					} else {
-						$(this).remove();
-						gp.previewElement.show();
-						gp.playElement.show();
-					}
+						// Stop animation
+						if (gp.options.effect) {
+							gp.previewElement.show();
+							gp.playElement.show();
+							$(this).stop(true).fadeOut();
+						} else {
+							$(this).remove();
+							gp.previewElement.show();
+							gp.playElement.show();
+						}
 
-					e.preventDefault();
-					e.stopPropagation();
-				});
+						e.preventDefault();
+						e.stopPropagation();
+					});
+				}
 			});
 		},
 
