@@ -2,8 +2,8 @@
 /*
 Plugin Name: GIF Animation Preview
 Plugin URI: http://wordpress.org/plugins/gif-animation-preview/
-Description: Replace GIF animations to a static preview image
-Version: 1.8.2
+Description: This plugin finds all of your posted animated GIF images to generate a simple preview and animate it as of your wish
+Version: 1.9
 Author: Andras Serfozo
 Author URI: http://twitter.com/SubZtep
 License: GPLv2 or later

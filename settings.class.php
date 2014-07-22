@@ -65,7 +65,7 @@ class GAP_Settings_Page
         );
         add_settings_field(
             'effect-field',
-            'Please Choose switch effect',
+            'Please choose fade intensity',
             array( $this, 'effect_field_callback' ),
             'gap-setting',
             'effect-section'
@@ -138,8 +138,8 @@ class GAP_Settings_Page
         <label>
             <input type="checkbox" name="<?php echo GAP_EFFECT_OPTION_NAME; ?>" value="1"<?php
                 echo $mobile == 1 ? ' checked="checked"' : ''; ?> />
-            Do fade between video and image<br />
-            <p class="description">When you stop animation the last frame will does fade out effect on top preview image</p><br />
+            Tick for a smooth switch<br />
+            <p class="description">Unticked setting give you a quick image replace</p><br />
         </label>
         <?php
     }
@@ -151,7 +151,7 @@ class GAP_Settings_Page
             <input type="checkbox" name="<?php echo GAP_HOVER_OPTION_NAME; ?>" value="1"<?php
                 echo $mobile == 1 ? ' checked="checked"' : ''; ?> />
             Start animation on mouse hover<br />
-            <p class="description">Mouse move over an image starts change event, like a click (only for desktop)</p><br />
+            <p class="description">Move your mouse over an image to starts switch event, like a click (only for desktop)</p><br />
         </label>
         <?php
     }
@@ -165,8 +165,7 @@ class GAP_Settings_Page
         <?php do_settings_sections( 'gap-setting' ); ?>
         <?php submit_button(); ?>
         </form>
-        <p><strong>Note:</strong> Start this plugin again for unhandled images with <strong><i>gapStart();</i></strong> command,
-            for infinite scroll plugin or similars</p>
+        <p><strong>Note:</strong> You are able to start this plugin for unhandled images with <strong><i>gapStart();</i></strong> command, useful for infinite scroll plugin or similars</p>
         </div>
         <?php
     }
