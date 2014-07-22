@@ -5,6 +5,7 @@
 		this.spinnerElement = $("<div class = 'spinner'></div>");
 		this.options = options;
 		this.gifLoaded = false;
+		this.preventStart = false;
 	}
 
 	GapPlayer.prototype = {
@@ -49,16 +50,17 @@
 		},
 
 		addEvents: function() {
-			var gp=this;
-			gp.playElement.on('click', function(e) {
+			var onEvent = this.options.hover ? 'click mouseenter' : 'click',
+				gp = this;
+			gp.playElement.on(onEvent, function(e) {
 				$(this).hide();
 				gp.spinnerElement.show();
 				gp.loadGif();
 				e.preventDefault();
 				e.stopPropagation();
 			});
-			gp.previewElement.on('click', function(e) {
-				if (gp.playElement.is(':visible')) {
+			gp.previewElement.on(onEvent, function(e) {
+				if (gp.playElement.is(':visible') && ! gp.preventStart) {
 					gp.playElement.hide();
 					gp.spinnerElement.show();
 					gp.loadGif();
@@ -66,7 +68,12 @@
 				e.preventDefault();
 				e.stopPropagation();
 			});
-			gp.spinnerElement.on('click', function(e) {
+			if (gp.options.hover) {
+				gp.previewElement.on('mouseleave', function(e) {
+					gp.preventStart = false;
+				});
+			}
+			gp.spinnerElement.on(onEvent, function(e) {
 				e.preventDefault();
 				e.stopPropagation();
 			});
@@ -76,23 +83,26 @@
 			if (! this.gifLoaded) {
 				this.enableAbort();
 			}
-			var gifSrc=this.getGifSrc();
-			var gifWidth=this.previewElement.width();
-			var gifHeight=this.previewElement.height();
-			this.gifElement = $("<img src='" + gifSrc + "' width='"+ gifWidth + "' height=' "+ gifHeight +" '/>");
-			var gp = this;
+			var that = this,
+				onEvent = that.options.hover ? 'click mouseleave' : 'click',
+				gifSrc = this.getGifSrc(),
+				gifWidth = this.previewElement.width(),
+				gifHeight = this.previewElement.height(),
+				gp = this;
+			gp.gifElement = $("<img src='" + gifSrc + "' width='" + gifWidth + "' height=' "+ gifHeight + " '/>");
 			this.gifElement.load(function() {
 				gp.gifLoaded = true;
 				gp.resetEvents();
-				$(this).css('cursor', 'pointer');
-				$(this).css('position', 'absolute');
-				$(this).css('top', '0');
-				$(this).css('left', '0');
+				$(this).css({'cursor': 'pointer',
+							'position': 'absolute',
+							'top': '0',
+							'left': '0'});
 				gp.previewElement.hide();
 				gp.wrapper.append(gp.gifElement);
 				gp.spinnerElement.hide();
 
-				$(this).click(function(e) {
+				$(this).on(onEvent, function(e) {
+					that.preventStart = that.options.hover && e.type == 'click';
 					$(this).remove();
 					gp.previewElement.show();
 					gp.playElement.show();
@@ -149,7 +159,8 @@
 	$.fn.gapPlayer.defaults = {
 		label: 'gif',
 		autoLoad: false,
-		preLoad: false
+		preLoad: false,
+		hover: false
 	};
 
 	// Start plugin
@@ -157,7 +168,8 @@
 	gifs.imagesLoaded(function() {
 		gifs.gapPlayer({
 			autoLoad: gapParams.autoLoad == 'yes',
-			preLoad: gapParams.preLoad == 'no'
+			preLoad: gapParams.preLoad == 'no',
+			hover: gapParams.hover == 'yes'
 		});
 	});
 
