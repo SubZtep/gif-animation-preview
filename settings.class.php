@@ -151,7 +151,7 @@ class GAP_Settings_Page
             <input type="checkbox" name="<?php echo GAP_HOVER_OPTION_NAME; ?>" value="1"<?php
                 echo $mobile == 1 ? ' checked="checked"' : ''; ?> />
             Start animation on mouse hover<br />
-            <p class="description">Mouse move over an image starts change event, like a click</p><br />
+            <p class="description">Mouse move over an image starts change event, like a click (only for desktop)</p><br />
         </label>
         <?php
     }
