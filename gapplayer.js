@@ -1,8 +1,15 @@
+/*
+ * Based on:
+ * Gifplayer v0.1.0
+ * (c)2014 Rubén Torres - rubentdlh@gmail.com
+ * Released under the MIT license
+ */
+
 (function($) {
 
 	function GapPlayer(preview, options) {
 		this.previewElement = preview;
-		this.spinnerElement = $("<div class = 'spinner'></div>");
+		this.spinnerElement = $("<div class='spinner'></div>");
 		this.options = options;
 		this.gifLoaded = false;
 	}
