@@ -82,7 +82,7 @@
 				gifSrc = this.getGifSrc(),
 				gifWidth = this.previewElement.width(),
 				gifHeight = this.previewElement.height();
-				
+
 			gp.gifElement = $("<img src='" + gifSrc + "' width='" + gifWidth + "' height=' "+ gifHeight + " '/>");
 			this.gifElement.load(function() {
 				gp.gifLoaded = true;
@@ -179,6 +179,11 @@
 	};
 
 	// Start plugin
+	gapStart();
+
+})(jQuery);
+
+function gapStart() {
 	var gifs = jQuery('img[data-gif]:not(.gapplayer)');
 	gifs.imagesLoaded(function() {
 		gifs.gapPlayer({
@@ -188,5 +193,4 @@
 			hover: gapParams.hover == 'yes'
 		});
 	});
-
-})(jQuery);
+}
