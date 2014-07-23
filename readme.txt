@@ -13,13 +13,13 @@ Replace GIF animations to a static preview image
 
 This plugin finds every GIF animation in your posts and replace it to a preview image. Doesn't matter the GIF embedded from another website or use WordPress's static thumbnail. It automatically generates the preview image from the first frame of the animation and save it to the post's media directory with `-gap.jpg` suffix
 
-Posts show the pregenareted small size jpeg file first, your visitors don't need to wait for download the huge animation. Play animation after they click on the image or after your whole page has downloaded. It depends on your setting
+Posts show the pregenareted small size jpeg file first, your visitors don't need to wait for download the huge animation. Play animation after they click on the image or after your whole page has downloaded. It depends on your setting:
 
 * You are able to stop animations everywhere
 * Or start animation automatically only inside a post
 * Or start the moves everywhere by default, use this plugin for lazyload
 
-There are additional settings
+There are additional settings:
 
 * Pretty smooth effect between your preview and animation
 * Start animations with your mouse
@@ -63,14 +63,14 @@ Yes, you need to add `gapStart();` to the callback area
 
 == Screenshots ==
 
-1. This is the admin interface at this moment, you will find something similar
+1. This is the admin interface at the moment, you will find something similar
 2. Blog preview but your content
 
 == Changelog ==
 
-= 1.9 - WordPress Meetup London Edition 2k14 =
-*
-*
+= 1.9 =
+* Smooth animation switch
+* Start animation with mouse event
 * Install plugin create default settings
 * Delete plugin remove every settings from database
 * Retina ready banner and some text by @Starlin_
