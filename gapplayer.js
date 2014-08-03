@@ -17,8 +17,6 @@
 	GapPlayer.prototype = {
 
 		activate: function() {
-			if (! this.urlExists(this.getGifSrc()))
-				return false;
 			this.wrap();
 			this.addSpinner();
 			this.addControl();
@@ -167,14 +165,8 @@
 		addSpinner: function() {
 			this.wrapper.append(this.spinnerElement);
 			this.spinnerElement.hide();
-		},
-
-		urlExists: function(url) {
-			var http = new XMLHttpRequest();
-			http.open('HEAD', url, false);
-			http.send();
-			return http.status != 404;
 		}
+
 	};
 
 	$.fn.gapPlayer = function(options) {
