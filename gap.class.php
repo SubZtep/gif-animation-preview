@@ -4,20 +4,23 @@ class GIF_Animation_Preview {
     public $preview_suffix = '-gap'; // Preview image filename suffix
 
     protected static $plugin;
-    static function load() {
+    public static function load() {
         $class = __CLASS__;
         return ( self::$plugin ? self::$plugin : ( self::$plugin = new $class() ) );
     }
 
-    protected function __construct() {
+    public function __construct() {
         add_action( 'get_header', array( $this, 'register_scripts' ) );
         add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
         add_filter( 'the_content', array( $this, 'replace_gifs' ) );
+
+        //FIXME: load if has enabled in settings
+        add_filter( 'get_post_metadata', array( $this, 'replace_metadata_gifs' ), 10, 4 );
     }
 
     public function register_scripts() {
         wp_register_style( 'gapplayer', plugins_url( '/gapplayer.min.css', __FILE__ ), array(), '1.8.2' );
-        wp_register_script( 'gapplayer', plugins_url( '/gapplayer.min.js', __FILE__ ), array( 'jquery' ), '1.8.2', true );
+        wp_register_script( 'gapplayer', plugins_url( '/gapplayer.js', __FILE__ ), array( 'jquery' ), '1.8.2', true );
         wp_register_script( 'imagesloaded', plugins_url( '/imagesloaded.pkgd.min.js', __FILE__ ), array(), '3.1.8', true );
 
         if ( get_option( GAP_MOBILE_OPTION_NAME ) == 1 && wp_is_mobile() )
@@ -43,12 +46,19 @@ class GIF_Animation_Preview {
         wp_enqueue_script( 'gapplayer' );
     }
 
+
+
+    /**
+     * Find all image tags in the post and send it to process
+     */
     public function replace_gifs( $content ) {
-        // Find all img tags in the post
-        return preg_replace_callback( '/<img[^>]+>/i', array( $this, 'process_img' ), $content );
+        return preg_replace_callback( '/<img[^>]+>/i', array( $this, 'process_img_tag' ), $content );
     }
 
-    protected function process_img( $img_tag ) {
+    /**
+     * Send img src to process
+     */
+    public function process_img_tag( $img_tag ) {
         // Update src property
         $patterns = array( '/(src=")([^"]+)(")/i', '/(src=\')([^\']+)(\')/i' );
         $new_img_tag = preg_replace_callback( $patterns, array( $this, 'update_src' ), $img_tag[0] );
@@ -57,27 +67,65 @@ class GIF_Animation_Preview {
         return $new_img_tag;
     }
 
-    protected function update_src( $src ) {
+    /**
+     * Return updatet src and data-gif attribute for img tag, or just src if not processable
+     * @param array gif src array
+     */
+    public function update_src( $src ) {
         // Test only gif
-        $gif_src = $src[2];
-        if ( substr( strtolower( $gif_src ), -4) == '.gif' ) {
-
-            if ( preg_match( '/(.*)-\d+x\d+(\.gif)/i', $gif_src, $matches ) ) // if wordpress thumbnail
-                if ( file_exists( $this->get_blog_img_dir( $matches[1] . $matches[2], true ) .
-                                  $this->mb_basename( $matches[1] . $matches[2] ) ) )
-                    $gif_src = $matches[1] . $matches[2];
-
-            $new_src = $this->get_preview_url( $gif_src );
-            if ( ! $new_src )
-                $new_src = $this->generate_preview( $gif_src );
-            if ( $new_src )
-                return $src[1] . $new_src . $src[3] . ' data-gif=' . $src[3] . $gif_src . $src[3];
-        }
-        // Not gif nor animation, do nothing
-        return $src[0];
+        $gif_src = $this->get_full_size_url( $src[2] );
+        $new_gif_src = $this->get_updated_src( $gif_src );
+        if ( $gif_src != $new_gif_src )
+            return $src[1] . $new_gif_src . $src[3] . ' data-gif=' . $src[3] . $gif_src . $src[3];
+        return $src[0]; // nothing changed, return original
     }
 
-    protected function get_preview_url( $original_url ) {
+
+
+    /**
+     * Find all image in post metadata and send it to process
+     */
+    public function replace_metadata_gifs( $metadata, $object_id, $meta_key, $single ) { //FIXME: use only 2 parameters
+        if ( get_the_ID() == $object_id ) {
+            global $wpdb;
+            $value = $wpdb->get_var( "SELECT meta_value FROM $wpdb->postmeta WHERE post_id = $object_id AND meta_key = '$meta_key' LIMIT 1" );
+            if ( ! is_null( $value ) ) {
+                $new_gif_src = $this->get_updated_src( $value );
+                if ( $value != $new_gif_src )
+                    return $new_gif_src;
+            }
+        }
+    }
+
+
+
+    /**
+     * This function generate preview image, if necessary
+     * @param $src string gif filename
+     */
+    public function get_updated_src( $src ) {
+        if ( substr( strtolower( $src ), -4) == '.gif' ) {
+            $new_src = $this->get_preview_url( $src );
+            if ( ! $new_src )
+                $new_src = $this->generate_preview( $src );
+            if ( $new_src )
+                return $new_src;
+        }
+        return $src;
+    }
+
+    /**
+     * Try to find unresized version, wordpress resize kill animation
+     */
+    public function get_full_size_url( $src ) {
+        if ( preg_match( '/(.*)-\d+x\d+(\.gif)/i', $src, $matches ) )
+            if ( file_exists( $this->get_blog_img_dir( $matches[1] . $matches[2], true ) .
+                              $this->mb_basename( $matches[1] . $matches[2] ) ) )
+                return $matches[1] . $matches[2];
+        return $src;
+    }
+
+    public function get_preview_url( $original_url ) {
         $path = $this->get_blog_img_dir( $original_url, true );
         $preview_filename = $this->get_preview_filename( $original_url );
 
@@ -86,11 +134,11 @@ class GIF_Animation_Preview {
         return false;
     }
 
-    protected function is_local_image( $img_url ) {
+    public function is_local_image( $img_url ) {
         return strpos( $img_url, get_site_url() ) === 0;
     }
 
-    protected function get_blog_img_dir( $img_url, $is_path = true ) {
+    public function get_blog_img_dir( $img_url, $is_path = true ) {
         if ( $this->is_local_image( $img_url ) ) {
             $site_url = get_site_url();
             $url = substr( $img_url, strlen( $site_url ) );
@@ -101,7 +149,7 @@ class GIF_Animation_Preview {
         return $dir[ $is_path ? 'path' : 'url' ] . '/';
     }
 
-    protected function get_preview_filename( $img_src ) {
+    public function get_preview_filename( $img_src ) {
         return substr( $this->mb_basename( $img_src ), 0, -4 ) . $this->preview_suffix . '.jpg';
     }
 
@@ -140,7 +188,7 @@ class GIF_Animation_Preview {
         return $this->get_blog_img_dir( $img_url, false ) . $preview_file;
     }
 
-    function mb_basename( $filepath, $suffix = null ) {
+    public function mb_basename( $filepath, $suffix = null ) {
         $splited = preg_split ( '/\//', rtrim ( $filepath, '/ ' ) );
         return substr ( basename ( 'X' . $splited [count ( $splited ) - 1], $suffix ), 1 );
     }
