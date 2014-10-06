@@ -191,7 +191,12 @@
 })(jQuery);
 
 function gapStart() {
-	var gifs = jQuery('img[data-gif]:not(.gapplayer)');
+	jQuery('img[src$="-gap.jpg"]:not(.gapplayer)').each(function() {
+		var src = jQuery(this).attr('src');
+		jQuery(this).attr('data-gif', src.substring(0, src.length - 8) + '.gif');
+	});
+
+	var gifs = jQuery('img[src$="-gap.jpg"]:not(.gapplayer)');
 	gifs.imagesLoaded(function() {
 		gifs.gapPlayer({
 			autoLoad: gapParams.autoLoad == 'yes',
