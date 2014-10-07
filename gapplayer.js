@@ -191,7 +191,7 @@
 })(jQuery);
 
 function gapStart() {
-	jQuery('img[src$="-gap.jpg"]:not(.gapplayer)').each(function() {
+	jQuery('img[src$="-gap.jpg"]:not([data-gif]):not(.gapplayer)').each(function() {
 		var src = jQuery(this).attr('src');
 		jQuery(this).attr('data-gif', src.substring(0, src.length - 8) + '.gif');
 	});
