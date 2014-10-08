@@ -100,6 +100,21 @@ class GAP_Settings_Page
             'gap-setting',
             'metadata-section'
         );
+
+        register_setting( 'type-group', GAP_THUMBNAIL_OPTION_NAME );
+        add_settings_section(
+            'thumbnail-section',
+            null,
+            null,
+            'gap-setting'
+        );
+        add_settings_field(
+            'thumbnail-field',
+            'Please Choose post thumbnail action',
+            array( $this, 'thumbnail_field_callback' ),
+            'gap-setting',
+            'thumbnail-section'
+        );
     }
 
     public function type_section_callback() {
@@ -136,7 +151,7 @@ class GAP_Settings_Page
     }
 
     public function mobile_field_callback() {
-        $mobile = get_option( GAP_MOBILE_OPTION_NAME, 0 );
+        $mobile = get_option( GAP_MOBILE_OPTION_NAME );
         ?>
         <label>
             <input type="checkbox" name="<?php echo GAP_MOBILE_OPTION_NAME; ?>" value="1"<?php
@@ -148,7 +163,7 @@ class GAP_Settings_Page
     }
 
     public function effect_field_callback() {
-        $mobile = get_option( GAP_EFFECT_OPTION_NAME, 0 );
+        $mobile = get_option( GAP_EFFECT_OPTION_NAME );
         ?>
         <label>
             <input type="checkbox" name="<?php echo GAP_EFFECT_OPTION_NAME; ?>" value="1"<?php
@@ -160,7 +175,7 @@ class GAP_Settings_Page
     }
 
     public function hover_field_callback() {
-        $mobile = get_option( GAP_HOVER_OPTION_NAME, 0 );
+        $mobile = get_option( GAP_HOVER_OPTION_NAME );
         ?>
         <label>
             <input type="checkbox" name="<?php echo GAP_HOVER_OPTION_NAME; ?>" value="1"<?php
@@ -172,13 +187,25 @@ class GAP_Settings_Page
     }
 
     public function metadata_field_callback() {
-        $mobile = get_option( GAP_METADATA_OPTION_NAME, 0 );
+        $mobile = get_option( GAP_METADATA_OPTION_NAME );
         ?>
         <label>
             <input type="checkbox" name="<?php echo GAP_METADATA_OPTION_NAME; ?>" value="1"<?php
                 echo $mobile == 1 ? ' checked="checked"' : ''; ?> />
             Do preview images from metadata<br />
             <p class="description">Try to find all gifs in post attached metadata and do the preview with them</p><br />
+        </label>
+        <?php
+    }
+
+    public function thumbnail_field_callback() {
+        $mobile = get_option( GAP_THUMBNAIL_OPTION_NAME );
+        ?>
+        <label>
+            <input type="checkbox" name="<?php echo GAP_THUMBNAIL_OPTION_NAME; ?>" value="1"<?php
+                echo $mobile == 1 ? ' checked="checked"' : ''; ?> />
+            Do preview images for post thumbnail<br />
+            <p class="description">If post thumbnail meta-box contains gif preview it</p><br />
         </label>
         <?php
     }

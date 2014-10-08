@@ -13,9 +13,10 @@ class GIF_Animation_Preview {
         add_action( 'get_header', array( $this, 'register_scripts' ) );
         add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
         add_filter( 'the_content', array( $this, 'replace_gifs' ) );
-
         if ( get_option( GAP_METADATA_OPTION_NAME ) )
             add_filter( 'get_post_metadata', array( $this, 'replace_metadata_gifs' ), 10, 3 );
+        if ( get_option( GAP_THUMBNAIL_OPTION_NAME ) )
+            add_filter( 'post_thumbnail_html', array( $this, 'replace_gifs' ) );
     }
 
     public function register_scripts() {
@@ -35,9 +36,9 @@ class GIF_Animation_Preview {
         wp_localize_script( 'gapplayer', 'gapParams', array(
             'autoLoad' => $auto_load ? 'yes' : 'no',
             'preLoad' => wp_is_mobile() ? 'yes' : 'no',
-            'effect' => get_option( GAP_EFFECT_OPTION_NAME ) == 1 ? 'yes' : 'no',
-            'hover' => get_option( GAP_HOVER_OPTION_NAME ) == 1 && ! wp_is_mobile() ? 'yes' : 'no',
-            'metadata' => get_option( GAP_METADATA_OPTION_NAME ) == 1 ? 'yes' : 'no'
+            'effect' => get_option( GAP_EFFECT_OPTION_NAME ) ? 'yes' : 'no',
+            'hover' => get_option( GAP_HOVER_OPTION_NAME ) && ! wp_is_mobile() ? 'yes' : 'no',
+            'metadata' => get_option( GAP_METADATA_OPTION_NAME ) ? 'yes' : 'no'
         ) );
     }
 

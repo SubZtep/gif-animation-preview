@@ -16,6 +16,7 @@ define( 'GAP_MOBILE_OPTION_NAME', 'gap-mobile' );
 define( 'GAP_EFFECT_OPTION_NAME', 'gap-effect' );
 define( 'GAP_HOVER_OPTION_NAME', 'gap-hover' );
 define( 'GAP_METADATA_OPTION_NAME', 'gap-metadata' );
+define( 'GAP_THUMBNAIL_OPTION_NAME', 'gap-thumbnail' );
 
 register_activation_hook( __FILE__, 'gap_test_env' );
 register_uninstall_hook( __FILE__, 'gap_del_options' );
@@ -38,6 +39,7 @@ function gap_test_env() {
     add_option( GAP_EFFECT_OPTION_NAME, 1 );
     add_option( GAP_HOVER_OPTION_NAME, 1 );
     add_option( GAP_HOVER_METADATA_NAME, 0 );
+    add_option( GAP_THUMBNAIL_OPTION_NAME, 1 );
 
     return true;
 }
@@ -48,6 +50,7 @@ function gap_del_options() {
     delete_option( GAP_EFFECT_OPTION_NAME );
     delete_option( GAP_HOVER_OPTION_NAME );
     delete_option( GAP_METADATA_OPTION_NAME );
+    delete_option( GAP_THUMBNAIL_OPTION_NAME );
 }
 
 
