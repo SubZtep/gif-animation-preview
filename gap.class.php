@@ -14,8 +14,8 @@ class GIF_Animation_Preview {
         add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
         add_filter( 'the_content', array( $this, 'replace_gifs' ) );
 
-        //FIXME: load if has enabled in settings
-        add_filter( 'get_post_metadata', array( $this, 'replace_metadata_gifs' ), 10, 4 );
+        if ( get_option( GAP_METADATA_OPTION_NAME ) )
+            add_filter( 'get_post_metadata', array( $this, 'replace_metadata_gifs' ), 10, 4 );
     }
 
     public function register_scripts() {
@@ -36,7 +36,8 @@ class GIF_Animation_Preview {
             'autoLoad' => $auto_load ? 'yes' : 'no',
             'preLoad' => wp_is_mobile() ? 'yes' : 'no',
             'effect' => get_option( GAP_EFFECT_OPTION_NAME ) == 1 ? 'yes' : 'no',
-            'hover' => get_option( GAP_HOVER_OPTION_NAME ) == 1 && ! wp_is_mobile() ? 'yes' : 'no'
+            'hover' => get_option( GAP_HOVER_OPTION_NAME ) == 1 && ! wp_is_mobile() ? 'yes' : 'no',
+            'metadata' => get_option( GAP_METADATA_OPTION_NAME ) == 1 ? 'yes' : 'no'
         ) );
     }
 

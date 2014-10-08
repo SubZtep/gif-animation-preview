@@ -79,11 +79,26 @@ class GAP_Settings_Page
             'gap-setting'
         );
         add_settings_field(
-            'hovert-field',
+            'hover-field',
             'Please Choose start event',
             array( $this, 'hover_field_callback' ),
             'gap-setting',
             'hover-section'
+        );
+
+        register_setting( 'type-group', GAP_METADATA_OPTION_NAME );
+        add_settings_section(
+            'metadata-section',
+            null,
+            null,
+            'gap-setting'
+        );
+        add_settings_field(
+            'metadata-field',
+            'Please Choose metadata action',
+            array( $this, 'metadata_field_callback' ),
+            'gap-setting',
+            'metadata-section'
         );
     }
 
@@ -152,6 +167,18 @@ class GAP_Settings_Page
                 echo $mobile == 1 ? ' checked="checked"' : ''; ?> />
             Start animation on mouse hover<br />
             <p class="description">Move your mouse over an image to starts switch event, like a click (only for desktop)</p><br />
+        </label>
+        <?php
+    }
+
+    public function metadata_field_callback() {
+        $mobile = get_option( GAP_METADATA_OPTION_NAME, 0 );
+        ?>
+        <label>
+            <input type="checkbox" name="<?php echo GAP_METADATA_OPTION_NAME; ?>" value="1"<?php
+                echo $mobile == 1 ? ' checked="checked"' : ''; ?> />
+            Do preview images from metadata<br />
+            <p class="description">Try to find all gifs in post attached metadata and do the preview with them</p><br />
         </label>
         <?php
     }
