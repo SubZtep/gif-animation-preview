@@ -3,7 +3,7 @@ Contributors: subztep
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=64V8Y63QZLTTS
 Tags: gif, images
 Tested up to: 4.0
-Stable tag: 1.9
+Stable tag: 1.10
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -23,6 +23,7 @@ There are additional settings:
 
 * Pretty smooth effect between your preview and animation
 * Start animations with your mouse
+* Work with metadata and preview
 
 Don't worry, delete this plugin will remove all settings from your database. Generated preview images gonna stay there, you can use them everywhere until you delete them manually
 
@@ -43,23 +44,26 @@ Preview images generated on the fly, first view of the posts might be slow
 
 = Does plugin load gif animation directly with preview? =
 
-Animation loads after clicking at preview on mobile browsers but loads automatically on desktops
+Animation loads after clicking at preview on mobile browsers but loads automatically on desktops.
 
 = Does it delete the generated preview image after delete the original post or original image? =
 
-No. It can't be sure you use the preview image somewhere else. If you don't need preview anymore you need to delete it by yourself from the media directory
+No. It can't be sure you use the preview image somewhere else. If you don't need preview anymore you need to delete it by yourself from the media directory.
 
 = Does it add any watermark on the preview image? =
 
-No, it only generated clean image with separated play button on the top
+No, it only generated clean image with separated play button on the top.
 
 = Does this plugin modify anything in my database? =
 
-No, everything is happening on the fly. Once you deactivate, you get back your original posts (fyi it stores your settings in wp_options table, as usual)
+No, everything is happening on the fly. Once you deactivate, you get back your original posts (fyi it stores your settings in wp_options table, as usual).
 
 = Can I use it with Infinite scroll plugin? =
 
-Yes, you need to add `gapStart();` to the callback area
+Yes, you need to add `gapStart();` to the callback area on admin.
+
+= Can I use it with Aruna template? =
+Yes, open `wp-content/themes/Aruna/functions.php` with a text editor and add `$teo_nolazy = true;` line after `<?php` (second line) for turn off template's lazy load function. Go to plugin's admin and turn on metadata overwrite.
 
 == Screenshots ==
 
@@ -67,6 +71,10 @@ Yes, you need to add `gapStart();` to the callback area
 2. Blog preview but your content
 
 == Changelog ==
+
+= 1.10 =
+* Handle gifs in metadata
+* Handle post thumbnail html (thanks for Akis)
 
 = 1.9 =
 * Smooth animation switch
