@@ -3,7 +3,7 @@ Contributors: subztep
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=64V8Y63QZLTTS
 Tags: gif, images
 Tested up to: 4.0
-Stable tag: 1.10.1
+Stable tag: 1.10.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -71,6 +71,9 @@ Yes, open `wp-content/themes/Aruna/functions.php` with a text editor and add `$t
 2. Blog preview but your content
 
 == Changelog ==
+
+= 1.10.2 =
+* Find images with parameter on client side (Jetpack's Photon compatibility)
 
 = 1.10.1 =
 * Remove jQuery check (still required)
