@@ -24,7 +24,7 @@ There are additional settings:
 * Pretty smooth effect between your preview and animation
 * Start animations with your mouse
 * Work with metadata and preview
-* Disable for certain images with `nogap` class
+* Disable on certain images with `nogap` class
 
 Don't worry, delete this plugin will remove all settings from your database. Generated preview images gonna stay there, you can use them everywhere until you delete them manually.
 
@@ -66,7 +66,7 @@ Yes, you need to add `gapStart();` to the callback area on admin.
 = Can I use it with Aruna template? =
 Yes, open `wp-content/themes/Aruna/functions.php` with a text editor and add `$teo_nolazy = true;` line after `<?php` (second line) for turn off template's lazy load function. Go to plugin's admin and turn on metadata overwrite.
 
-= Can I disable for certain images? =
+= Can I disable on certain images? =
 Yes, add `nogap` to image class attribute and plugin will not work.
 
 
@@ -78,7 +78,7 @@ Yes, add `nogap` to image class attribute and plugin will not work.
 == Changelog ==
 
 = 1.10.3 =
-* Disable for certain images with nogap class
+* Disabling on certain images with nogap class
 
 = 1.10.2 =
 * Find images with parameter on client side (Jetpack's Photon compatibility)
