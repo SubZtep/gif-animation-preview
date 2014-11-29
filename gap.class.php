@@ -61,6 +61,10 @@ class GIF_Animation_Preview {
      * Send img src to process
      */
     public function process_img_tag( $img_tag ) {
+        // If nogap class exists do nothing
+        if ( preg_match( '/class=".*nogap.*"/i', $img_tag[0] ) || preg_match( '/class=\'.*nogap.*\'/i', $img_tag[0] ) )
+            return $img_tag[0];
+
         // Update src property
         $patterns = array( '/(src=")([^"]+)(")/i', '/(src=\')([^\']+)(\')/i' );
         $new_img_tag = preg_replace_callback( $patterns, array( $this, 'update_src' ), $img_tag[0] );

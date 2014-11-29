@@ -3,7 +3,7 @@ Contributors: subztep
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=64V8Y63QZLTTS
 Tags: gif, images
 Tested up to: 4.0
-Stable tag: 1.10.2
+Stable tag: 1.10.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -11,7 +11,7 @@ Replace GIF animations to a static preview image
 
 == Description ==
 
-This plugin finds every GIF animation in your posts and replace it to a preview image. Doesn't matter the GIF embedded from another website or use WordPress's static thumbnail. It automatically generates the preview image from the first frame of the animation and save it to the post's media directory with `-gap.jpg` suffix
+This plugin finds every GIF animation in your posts and replace it to a preview image. Doesn't matter the GIF embedded from another website or use WordPress's static thumbnail. It automatically generates the preview image from the first frame of the animation and save it to the post's media directory with `-gap.jpg` suffix.
 
 Posts show the pregenareted small size jpeg file first, your visitors don't need to wait for download the huge animation. Play animation after they click on the image or after your whole page has downloaded. It depends on your setting:
 
@@ -24,8 +24,9 @@ There are additional settings:
 * Pretty smooth effect between your preview and animation
 * Start animations with your mouse
 * Work with metadata and preview
+* Disable for certain images with `nogap` class
 
-Don't worry, delete this plugin will remove all settings from your database. Generated preview images gonna stay there, you can use them everywhere until you delete them manually
+Don't worry, delete this plugin will remove all settings from your database. Generated preview images gonna stay there, you can use them everywhere until you delete them manually.
 
 [Live Demo](http://demo.land/wordpress/?p=4)
 
@@ -65,12 +66,19 @@ Yes, you need to add `gapStart();` to the callback area on admin.
 = Can I use it with Aruna template? =
 Yes, open `wp-content/themes/Aruna/functions.php` with a text editor and add `$teo_nolazy = true;` line after `<?php` (second line) for turn off template's lazy load function. Go to plugin's admin and turn on metadata overwrite.
 
+= Can I disable for certain images? =
+Yes, add `nogap` to image class attribute and plugin will not work.
+
+
 == Screenshots ==
 
 1. This is the admin interface at the moment, you will find something similar
 2. Blog preview but your content
 
 == Changelog ==
+
+= 1.10.3 =
+* Disable for certain images with nogap class
 
 = 1.10.2 =
 * Find images with parameter on client side (Jetpack's Photon compatibility)
