@@ -33,8 +33,6 @@
 
 		wrap: function(){
 			this.wrapper = this.previewElement.wrap("<div class='gapplayer-wrapper'></div>").parent();
-			this.wrapper.css('width', this.previewElement.width());
-			this.wrapper.css('height', this.previewElement.height());
 			this.previewElement.addClass('gapplayer');
 			this.previewElement.css('cursor','pointer');
 		},
@@ -51,7 +49,6 @@
 
 		addControl: function(){
 			this.playElement = $("<ins class='play-gif'>" + this.options.label + "</ins>");
-			this.playElement.css('left', this.previewElement.width()/2 + this.playElement.width()/2);
 			this.wrapper.append(this.playElement);
 		},
 
@@ -90,13 +87,16 @@
 				gifWidth = this.previewElement.width(),
 				gifHeight = this.previewElement.height();
 
-			gp.gifElement = $("<img src='" + gifSrc + "' width='" + gifWidth + "' height=' "+ gifHeight + " '/>");
+			gp.gifElement = $("<img src='" + gifSrc + "'/>");
 			this.gifElement.load(function() {
 				gp.gifLoaded = true;
 				gp.resetEvents();
 				$(this).css({'position': 'absolute',
 							'top': '0',
-							'left': '0'});
+							'left': '0',
+							'max-width': '100%',
+							'height': 'auto'
+							});
 
 				// Start animation
 				if (gp.options.effect) {
@@ -104,10 +104,10 @@
 					gp.spinnerElement.hide();
 					gp.wrapper.append(gp.gifElement);
 					gp.gifElement.stop(true).fadeIn(function() {
-						gp.previewElement.hide();
+						gp.previewElement.css({ 'visibility' : 'hidden' });
 					});
 				} else {
-					gp.previewElement.hide();
+					gp.previewElement.css({ 'visibility' : 'hidden' });
 					gp.wrapper.append(gp.gifElement);
 					gp.spinnerElement.hide();
 				}
@@ -117,12 +117,12 @@
 
 						// Stop animation
 						if (gp.options.effect) {
-							gp.previewElement.show();
+							gp.previewElement.css({ 'visibility' : 'visible' });
 							gp.playElement.show();
 							$(this).stop(true).fadeOut();
 						} else {
 							$(this).remove();
-							gp.previewElement.show();
+							gp.previewElement.css({ 'visibility' : 'visible' });
 							gp.playElement.show();
 						}
 
