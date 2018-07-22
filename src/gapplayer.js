@@ -1,7 +1,7 @@
 /*
  * Based on:
  * Gifplayer v0.1.0
- * (c)2014 RubÃ©n Torres - rubentdlh@gmail.com
+ * (c)2014 Rubén Torres - rubentdlh@gmail.com
  * Released under the MIT license
  */
 
@@ -31,7 +31,7 @@
 			}
 		},
 
-		wrap: function(){
+		wrap: function() {
 			this.wrapper = this.previewElement.wrap("<div class='gapplayer-wrapper'></div>").parent();
 			this.wrapper.css('width', this.previewElement.width());
 			this.wrapper.css('height', this.previewElement.height());
@@ -39,7 +39,7 @@
 			this.previewElement.css('cursor','pointer');
 		},
 
-		getGifSrc: function(){
+		getGifSrc: function() {
 			var gifSrc;
 			if (this.previewElement.attr('data-gif')) {
 				gifSrc = this.previewElement.attr('data-gif');
@@ -49,7 +49,7 @@
 			return gifSrc;
 		},
 
-		addControl: function(){
+		addControl: function() {
 			this.playElement = $("<ins class='play-gif'>" + this.options.label + "</ins>");
 			this.playElement.css('left', this.previewElement.width()/2 + this.playElement.width()/2);
 			this.wrapper.append(this.playElement);
@@ -191,7 +191,7 @@
 })(jQuery);
 
 function gapStart() {
-	if (gapParams.metadata == 'yes')
+	if (gapParams.metadata === 'yes')
 		jQuery('img[src$="-gap.jpg"]:not([data-gif]):not(.gapplayer),img[src*="-gap.jpg?"]:not([data-gif]):not(.gapplayer)').each(function() {
 			var src = jQuery(this).attr('src');
 			jQuery(this).attr('data-gif', src.substring(0, src.length - 8) + '.gif');

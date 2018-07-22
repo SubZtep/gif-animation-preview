@@ -1,0 +1,24 @@
+{
+  "name": "gif-animation-preview",
+  "version": "2.0.0",
+  "description": "Wordpress Plugin",
+  "repository": {
+    "url": "https://github.com/SubZtep/gif-animation-preview",
+    "type": "git"
+  },
+  "author": "Andras Serfozo <subztep@gmail.com>",
+  "license": "MIT",
+  "private": true,
+  "browserslist": [
+    "cover 99.5%"
+  ],
+  "devDependencies": {
+    "autoprefixer": "^9.0.1",
+    "cssnano": "^4.0.3",
+    "gulp": "^4.0.0",
+    "gulp-clean-css": "^3.9.4",
+    "gulp-postcss": "^7.0.1",
+    "gulp-sass": "^4.0.1",
+    "gulp-uglify": "^3.0.0"
+  }
+}
