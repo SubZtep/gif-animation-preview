@@ -1,7 +1,7 @@
 /*
  * Based on:
  * Gifplayer v0.1.0
- * (c)2014 Rubén Torres - rubentdlh@gmail.com
+ * (c)2014 Rubï¿½n Torres - rubentdlh@gmail.com
  * Released under the MIT license
  */
 
@@ -191,19 +191,39 @@
 })(jQuery);
 
 function gapStart() {
-	if (gapParams.metadata === 'yes')
+	if (gapParams.metadata === 'yes') {
 		jQuery('img[src$="-gap.jpg"]:not([data-gif]):not(.gapplayer),img[src*="-gap.jpg?"]:not([data-gif]):not(.gapplayer)').each(function() {
 			var src = jQuery(this).attr('src');
 			jQuery(this).attr('data-gif', src.substring(0, src.length - 8) + '.gif');
 		});
+	}
 
-	var gifs = jQuery('img[src$="-gap.jpg"]:not(.gapplayer),img[src*="-gap.jpg?"]:not(.gapplayer)');
-	gifs.imagesLoaded(function() {
-		gifs.gapPlayer({
-			autoLoad: gapParams.autoLoad == 'yes',
-			preLoad: gapParams.preLoad == 'no',
-			effect: gapParams.effect == 'yes',
-			hover: gapParams.hover == 'yes'
-		});
+	var gapPlayerParams = {
+		autoLoad: gapParams.autoLoad == 'yes',
+		preLoad: gapParams.preLoad == 'no',
+		effect: gapParams.effect == 'yes',
+		hover: gapParams.hover == 'yes'
+	};
+
+	var noLazyGifsArr = [];
+	jQuery('img[data-gif]').each(function() {
+		var img = jQuery(this);
+
+		if (img.hasClass('lazy-hidden')) {
+			// Handle BJ Lazy Load
+			img.on('lazyloaded', function() {
+				img.imagesLoaded(function() {
+					img.gapPlayer(gapPlayerParams);
+				});
+				img.off('lazyloaded');
+			})
+		} else {
+			// Not lazy loaded
+			noLazyGifsArr.push(img);
+		}
+	});
+	var noLazyGifs = jQuery(noLazyGifsArr);
+	noLazyGifs.imagesLoaded(function() {
+		noLazyGifs.gapPlayer(gapPlayerParams);
 	});
 }
