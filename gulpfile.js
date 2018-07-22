@@ -18,6 +18,11 @@ gulp.task('js', () => {
         .pipe(gulp.dest('./dist'))
 })
 
+gulp.task('watch', () => {
+    gulp.watch('./src/**/*.scss', gulp.parallel('css'))
+    gulp.watch('./src/**/*.js', gulp.parallel('js'))
+})
+
 gulp.task('default', gulp.parallel('css', 'js', done => {
     done()
 }))
