@@ -1,4 +1,7 @@
 <?php
+/**
+ * ADMIN
+ */
 class GAP_Settings_Page
 {
     protected $options;
@@ -10,11 +13,11 @@ class GAP_Settings_Page
     }
 
     protected function __construct() {
-        add_action( 'admin_menu', array( $this, 'add_settings_page' ) );
+        add_action( 'admin_menu', array( $this, 'gap_menu_items' ) );
         add_action( 'admin_init', array( $this, 'settings_init' ) );
     }
 
-    public function add_settings_page() {
+    public function gap_menu_items() {
         add_options_page(
             'GIF Animation Preview - Settings Page',
             'GIF Animation Preview',
@@ -22,6 +25,25 @@ class GAP_Settings_Page
             'gap-setting',
             array( $this, 'create_settings_page' )
         );
+
+        // VUE Page
+        add_menu_page(
+            'GIF Animation Preview - Manage Page',
+            'GIF AP',
+            'manage_options',
+            'gap-manage',
+            array( $this, 'create_manage_page' ),
+            'dashicons-video-alt2',
+            6
+        );
+    }
+
+    public function create_manage_page() {
+        ?>
+        <div id="app"></div>
+        <?php
+        wp_enqueue_script( 'gap_vue_vendors', GAP_PLUGIN_URL . 'admin/js/chunk-vendors.js' );
+        wp_enqueue_script( 'gap_vue_manage', GAP_PLUGIN_URL . 'admin/js/index.js' );
     }
 
     public function settings_init() {

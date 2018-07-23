@@ -23,8 +23,8 @@ class GIF_Animation_Preview {
     }
 
     public function register_scripts() {
-        wp_register_style( 'gapplayer', GAP_PLUGIN_URL . 'dist/gapplayer.css', array(), '2.0.0' );
-        wp_register_script( 'gapplayer', GAP_PLUGIN_URL . 'dist/gapplayer.js', array(), '2.0.0', true ); // jQuery required
+        wp_register_style( 'gapplayer', GAP_PLUGIN_URL . 'public/gapplayer.css', array(), '2.0.0' );
+        wp_register_script( 'gapplayer', GAP_PLUGIN_URL . 'publicdist/gapplayer.js', array(), '2.0.0', true ); // jQuery required
 
         if ( get_option( GAP_MOBILE_OPTION_NAME ) == 1 && wp_is_mobile() ) {
             $auto_load = false;

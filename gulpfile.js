@@ -6,16 +6,16 @@ const cssnano = require('cssnano')
 const uglify = require('gulp-uglify')
 
 gulp.task('css', () => {
-    return gulp.src('./src/**/*.scss')
+    return gulp.src('./src/public/**/*.scss')
         .pipe(sass().on('error', sass.logError))
         .pipe(postcss([autoprefixer(), cssnano()]))
-        .pipe(gulp.dest('./dist'))
+        .pipe(gulp.dest('./public'))
 })
 
 gulp.task('js', () => {
-    return gulp.src('./src/**/*.js')
+    return gulp.src('./src/public/**/*.js')
         .pipe(uglify())
-        .pipe(gulp.dest('./dist'))
+        .pipe(gulp.dest('./public'))
 })
 
 gulp.task('watch', () => {
