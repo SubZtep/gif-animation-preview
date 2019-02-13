@@ -1,6 +1,7 @@
-const AssetPlugin = require("assets-webpack-plugin")
-
 module.exports = {
+
+  //publicPath: "aaa/bbb", // wp install
+
   chainWebpack: config => {
     config
       .plugin("html")
@@ -9,17 +10,5 @@ module.exports = {
         //args[0].inject = "body"
         return args
       })
-
-    config
-      .plugin("assets")
-      .use(AssetPlugin, [{
-        filename: "assets.json",
-        fullPath: false,
-        manifestFirst: true,
-        useCompilerPath: true,
-        update: true,
-        prettyPrint: true,
-        keepInMemory: true
-      }])
   }
 }
