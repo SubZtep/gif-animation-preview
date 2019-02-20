@@ -2,9 +2,11 @@ language: node_js
 os:
 - linux
 node_js: 8
-script:
-- yarn test:e2e
+
 addons:
   browserstack:
     username: $BROWSERSTACK_USERNAME
     access_key: $BROWSERSTACK_ACCESS_KEY
+
+script:
+- yarn test:e2e

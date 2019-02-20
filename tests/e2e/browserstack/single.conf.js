@@ -1,5 +1,3 @@
-require("dotenv").config()
-
 nightwatch_config = {
   src_folders: ["tests/e2e/specs"],
 

@@ -2,11 +2,13 @@
 
 const Nightwatch = require("nightwatch")
 const browserstack = require("browserstack-local")
-require("dotenv").config()
-let bs_local
 
 try {
   process.mainModule.filename = "./node_modules/.bin/nightwatch"
+
+  console.log("VAR TEST", [process.env.BROWSERSTACK_USERNAME, process.env.BROWSERSTACK_ACCESS_KEY])
+
+  let bs_local
   Nightwatch.bs_local = bs_local = new browserstack.Local()
 
   bs_local.start({"key": process.env.BROWSERSTACK_ACCESS_KEY, onlyCommand: true }, error => {
