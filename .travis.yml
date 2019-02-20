@@ -1,8 +1,11 @@
 language: node_js
 os:
-  - osx
-  - linux
+- linux
 node_js: 8
-
 script:
-  - yarn test:unit
+- yarn test:unit
+addons:
+  browserstack:
+    username: andrasserfozo1
+    access_key:
+      secure: LU5yRF3YJuASnqbREIVPxd9HF3hAfRc7zLUFz68j9T88j+4x+2oMIl9DnVhZlwmEpnOGvhnQbtV0EOMNDrMeNc/cSWOsz05YKud7zjTerdUi8/WaD4CYIFg8GD7tmTpsPZgyGftnNl6gI5voCXJ8wEXQKTi+CsTVrXtu3lxj9IJbI1ybYaXAFA2NWFnjbpsVguCflMB8+BCr7jrWaU2qO/NbR4tSc84V9bhdKPcK6rc+k9QVIuZZB/9NUVKsWZDlDRYLrEfxRIxAqGReSpCrrGVOxt9uvb0UlKV9axdMqVvnoDrYAaWJDyu6X95T7PN/M16Aj6+qQJX4lXe2WnJIXr2/V8usuLIViQaiMbzupGrdmhkrL4R7npi3noiJbiFCaoNU4Mvdx4wUgGwd5NWUmQNVIpi/o4/dLBehR7QUYMEz/dJz6wf0HB5/53BHyY3eFJ+qhlLw2UcRUJMlF/3Sl+eXKb8P0zHHQ8Em8VDoMjGvyCpRf3raHmrADQWLW5OJb3YE5M77ebrKkP9zwPgjYpJCRg5k1+wOhZSg/oehGRkw1t5zMacwN/vzKBHDdJbhjUp94RiYzMBp1kLwxElJFiahEzar+2efELCcrsVg9UcWbHQB9T01g+7GPCY/sHc+ICEvUJ+KEEDE7I6mKZNSw3nSz/v5tvPWcXGm4Tr/FnM=

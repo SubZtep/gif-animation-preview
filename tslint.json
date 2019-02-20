@@ -9,7 +9,9 @@
     ]
   },
   "rules": {
-    "quotemark": [true, "single"],
+    "quotemark": [true, "duble"],
+    "semicolon": [true, "never"],
+    "arrow-parens": [true, "ban-single-arg-parens"],
     "indent": [true, "spaces", 2],
     "interface-name": false,
     "ordered-imports": false,
