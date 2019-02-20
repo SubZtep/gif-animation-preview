@@ -6,6 +6,7 @@
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
+    "test:e2e:local": "cross-env NODE_ENV=test ./tests/e2e/browserstack/local.runner.js -c tests/e2e/browserstack/local.conf.js",
     "test:e2e": "vue-cli-service test:e2e",
     "test:unit": "vue-cli-service test:unit",
     "gapplayer": "rollup -c"
@@ -16,31 +17,31 @@
   },
   "dependencies": {
     "browserstack-local": "^1.3.7",
-    "dotenv": "^6.2.0",
-    "vue": "^2.5.22",
-    "vue-class-component": "^6.0.0",
-    "vue-property-decorator": "^7.0.0",
-    "vue-router": "^3.0.1",
-    "vuex": "^3.0.1"
+    "vue": "^2.6.6",
+    "vue-class-component": "^7.0.1",
+    "vue-property-decorator": "^7.3.0",
+    "vue-router": "^3.0.2",
+    "vuex": "^3.1.0"
   },
   "devDependencies": {
-    "@types/jest": "^23.1.4",
-    "@vue/cli-plugin-babel": "^3.4.0",
-    "@vue/cli-plugin-e2e-nightwatch": "^3.4.0",
-    "@vue/cli-plugin-typescript": "^3.4.0",
-    "@vue/cli-plugin-unit-jest": "^3.4.0",
-    "@vue/cli-service": "^3.4.0",
-    "@vue/test-utils": "^1.0.0-beta.20",
+    "@types/jest": "^24.0.6",
+    "@vue/cli-plugin-babel": "^3.4.1",
+    "@vue/cli-plugin-e2e-nightwatch": "^3.4.1",
+    "@vue/cli-plugin-typescript": "^3.4.1",
+    "@vue/cli-plugin-unit-jest": "^3.4.1",
+    "@vue/cli-service": "^3.4.1",
+    "@vue/test-utils": "^1.0.0-beta.29",
     "babel-core": "7.0.0-bridge.0",
+    "cross-env": "^5.2.0",
     "nightwatch": "^1.0.19",
-    "rollup": "^1.1.2",
+    "rollup": "^1.2.2",
     "rollup-plugin-typescript": "^1.0.0",
-    "sass": "^1.16.0",
+    "sass": "^1.17.0",
     "sass-loader": "^7.1.0",
-    "ts-jest": "^23.0.0",
+    "ts-jest": "^24.0.0",
     "tslib": "^1.9.3",
-    "typescript": "^3.0.0",
-    "vue-template-compiler": "^2.5.21"
+    "typescript": "^3.3.3",
+    "vue-template-compiler": "^2.6.6"
   },
   "postcss": {
     "plugins": {

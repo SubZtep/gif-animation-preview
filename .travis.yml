@@ -9,4 +9,4 @@ addons:
     access_key: $BROWSERSTACK_ACCESS_KEY
 
 script:
-- yarn test:e2e
+- yarn test:e2e:local
