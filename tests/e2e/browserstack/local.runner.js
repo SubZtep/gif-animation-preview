@@ -6,8 +6,6 @@ const browserstack = require("browserstack-local")
 try {
   process.mainModule.filename = "./node_modules/.bin/nightwatch"
 
-  console.log("VAR TEST", [process.env.BROWSERSTACK_USERNAME, process.env.BROWSERSTACK_ACCESS_KEY])
-
   let bs_local
   Nightwatch.bs_local = bs_local = new browserstack.Local()
 
