@@ -10,11 +10,14 @@ nightwatch_config = {
   test_settings: {
     default: {
       desiredCapabilities: {
+        "project": "GIF Animation Preview",
         "build": "nightwatch-browserstack",
-        "browserstack.user": process.env.BROWSERSTACK_USERNAME,
-        "browserstack.key": process.env.BROWSERSTACK_ACCESS_KEY,
+        "browserstack.console": "verbose",
         "browserstack.debug": true,
         "browserstack.local": true,
+        "browserstack.networkLogs": true,
+        "browserstack.user": process.env.BROWSERSTACK_USERNAME,
+        "browserstack.key": process.env.BROWSERSTACK_ACCESS_KEY,
         "browser": "chrome"
       }
     }
