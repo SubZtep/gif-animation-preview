@@ -9,7 +9,7 @@ try {
   process.mainModule.filename = "./node_modules/.bin/nightwatch"
   Nightwatch.bs_local = bs_local = new browserstack.Local()
 
-  bs_local.start({"key": process.env.BROWSERSTACK_KEY, onlyCommand: true }, error => {
+  bs_local.start({"key": process.env.BROWSERSTACK_ACCESS_KEY, onlyCommand: true }, error => {
     if (error) throw error
 
     console.log("Connected. Now testing...")

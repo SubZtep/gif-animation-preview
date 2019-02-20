@@ -12,8 +12,8 @@ nightwatch_config = {
   test_settings: {
     default: {
       desiredCapabilities: {
-        "browserstack.user": process.env.BROWSERSTACK_USER,
-        "browserstack.key": process.env.BROWSERSTACK_KEY,
+        "browserstack.user": process.env.BROWSERSTACK_USERNAME,
+        "browserstack.key": process.env.BROWSERSTACK_ACCESS_KEY,
         "browser": "chrome"
       }
     }

@@ -14,8 +14,8 @@ nightwatch_config = {
     default: {
       desiredCapabilities: {
         "build": "nightwatch-browserstack",
-        "browserstack.user": process.env.BROWSERSTACK_USER,
-        "browserstack.key": process.env.BROWSERSTACK_KEY,
+        "browserstack.user": process.env.BROWSERSTACK_USERNAME,
+        "browserstack.key": process.env.BROWSERSTACK_ACCESS_KEY,
         "browserstack.debug": true,
         "browserstack.local": true,
         "browser": "chrome"
