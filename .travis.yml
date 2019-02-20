@@ -7,6 +7,8 @@ script:
 addons:
   browserstack:
     username: andrasserfozo1
+    access_key:
+      secure: KSFTzR1cfUj+DuZek5jZfFTXi2zCeYI6ApJL7q2uDYhm50pFVaoQLdNhcpwjnunocNYNU8hvdZrnR3K1uWwfxFLMMlWbB9SCp2r18GL4Vx1q/MnADlnXRgQ37LCWdj0+xX1l+jpjMFd8HZv2QbY/WbF4aKYvQdE8ZhvzgOZNMH6u05rh+lzvVc2KTpwgKtnygfZ2qcFq2s2VKHsD525aqq4fqcbibyHsJR0lisXlCTCUAYz8cD61BgOP7UcEWhaE1zWLJSDuinKOfz3jWs9W24qGLCfIIgpuXwc3Lk1PjaPK8w3Dwz5dyL9TNf+RukS2x8irMCbCyf7j2QM9cm7Vczfy05XBeVRuYClHE7+5ynjLI/A3OTNKAI02Ovf+RbFneW/eamIK+wd8Rlx6u4ijF332f5osyUEzkA/STGqH7w1rBm+ADWhD4SqRAO97FMAgIMqAufzUAqqHzJA7XoyMjRmDFtOqkva/hjYbg1l3QkmE/8ce8o08zpGNyS1tEkexuiuqDA9LkVTVLmKUewwHtNkBcEUFWS+IfeUHhF1zXUX/EXJG0JkrP1jRKSu8FzyD2vyZtpFpifxg6EaM579dz/L4OLNqrKDU3O3Rt+7N0XWqTfk5tuCsIZg0qUeABO9+jwC0RCU9V+/GYrqe4F4QZvR8tDzelJfRyMsBlG9zL1M=
 env:
   matrix:
   - BROWSERSTACK_USER=andrasserfozo1
